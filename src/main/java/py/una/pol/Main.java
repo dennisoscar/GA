@@ -109,6 +109,8 @@ public class Main {
                     e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 
+
+        //setear valores para la ejecución
         Configuracion c = new Configuracion();
         c.setNumeroEjecuciones(numeroEjecuciones);
         c.setNumeroGeneraciones(numeroGeneraciones);
