@@ -183,7 +183,7 @@ public abstract class Individuo implements Comparable<Individuo> {
     public abstract double calcFA();
 
     /**
-     * Transforma el cromosoma de un Individuo en un cromosoma aleatorio. Es
+     * Transforma el cromosoma de un IndividuoEntero en un cromosoma aleatorio. Es
      * utilizado por el método {@link Poblacion#aleatoria() aleatoria} de
      * {@link Poblacion} cuando se debe generar una población aleatoria
      * para el inicio de una {@linkplain Ejecucion ejecución}.

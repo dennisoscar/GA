@@ -1,12 +1,13 @@
 package py.una.pol;
 
-import agapi.Configuracion;
+import agapi.*;
 import agapi.impl.SelectorPostCruceSoloHijos;
 import agapi.impl.SelectorTorneo;
-import edu.asu.emit.qyan.alg.control.GrafoMatriz;
-import edu.asu.emit.qyan.alg.control.YenTopKShortestPathsAlg;
+import edu.asu.emit.qyan.alg.control.*;
+import edu.asu.emit.qyan.alg.model.Path;
 import edu.asu.emit.qyan.alg.model.VariableGraph;
-import py.una.pol.model.Individuo;
+import exception.GetRequestException;
+import py.una.pol.model.IndividuoEntero;
 import py.una.pol.model.Solicitud;
 
 import javax.swing.*;
@@ -15,6 +16,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class Main {
@@ -70,10 +72,10 @@ public class Main {
             linea = bufRead.readLine();
         }
 
-        System.out.print("solicitudes entrantes:" + solicitudes);
+//        System.out.print("solicitudes entrantes:" + solicitudes);
         bufRead.close();
 
-        Individuo individuo = new Individuo();
+        IndividuoEntero individuo = new IndividuoEntero();
         //leer de un archivo properties
         Properties config = new Properties();
         InputStream configInput = null;
@@ -88,7 +90,7 @@ public class Main {
 
         try {
             //traer los datos de un archivo .properties
-            configInput = Individuo.class.getClassLoader().getResourceAsStream("config.properties");
+            configInput = IndividuoEntero.class.getClassLoader().getResourceAsStream("config.properties");
             config.load(configInput);
             System.out.println(config.getProperty("numeroEjecuciones"));
             numeroEjecuciones = Integer.parseInt(config.getProperty("numeroEjecuciones"));
@@ -121,14 +123,81 @@ public class Main {
         c.setProbabilidadMutacion(probabilidadDeMutacion);
         c.setElitismo(true);
         c.setTamanoPoblacion(tamanhoPoblacion);
-        c.setTipoIndividuo(new Individuo());
+        c.setTipoIndividuo(new IndividuoEntero());
         c.setTamanoCromosoma(tamanhoCromosoma);
         c.iniciarProceso();
+        //calculo auxiliar para saber como se estructura el proyeto
+        Proceso proceso = c.getProceso();
+        Ejecucion ejecucion[] = proceso.getEjecuciones();
+        Generacion generacion[] = ejecucion[0].getGeneraciones();
+        Poblacion poblacions = generacion[0].getPoblacion();
+        Individuo individuos[] = poblacions.getIndividuos();
+//        System.out.println(individuos[0]);
+
+        //pasos para metodo de calculo de fitnes(FA=Función Aptitud)
+        for (int i = 0; i < ejecucion.length; i++) {
+            Proceso procesoPrueba = c.getProceso();
+            Ejecucion ejecucionPrueba[] = procesoPrueba.getEjecuciones();
+            Generacion generacionPrueba[] = ejecucionPrueba[i].getGeneraciones();
+            for (int j = 0; j < generacionPrueba.length; j++) {
+                Poblacion poblacionPrueba = generacion[j].getPoblacion();
+                Individuo individuosPrueba[] = poblacionPrueba.getIndividuos();
+                for (int k = 0; k < individuosPrueba.length; k++) {
+                    Individuo individuoAux = individuosPrueba[k];
+                    IndividuoEntero individuoEntero = (IndividuoEntero) individuoAux;
+                    int cromosoma[] = individuoEntero.getCromosoma();
+                    for (int l = 0; l < cromosoma.length; l++) {
+                        Solicitud solicitud = obtenerSolicitud(cromosoma[l], solicitudes);
+                        int inicio = solicitud.getOrigen();
+                        int fin = solicitud.getDestino();
+                        int fs = solicitud.getFs();
+                        List<Path> shortest_paths_list = yenAlg.get_shortest_paths(
+                                //graph.get_vertex(1), graph.get_vertex(3), 300);
+                                graph.get_vertex(inicio), graph.get_vertex(fin), 4);
+//                        		System.out.println(":" + shortest_paths_list);
+                        BuscarSlot r = new BuscarSlot(g, shortest_paths_list);
+                        resultadoSlot res = r.concatenarCaminos(fs);
+                        if (res != null) {
+                            System.out.println(res.toString());
+
+                            Asignacion asignar = new Asignacion(g, res);
+                        } else {
+                            cont++;
+                            System.out.println("No se encontró camino posible.");
+
+                        }
+//                        System.out.println(cromosoma[l]);
+                    }
+                }
+
+            }
+
+        }
+
+        System.out.println("#############");
+        System.out.println("Cantidad de conexiones entrantes :" + contlineatxt);
+        System.out.println("Cantidad de conexiones fallidas :" + cont);
+//        System.out.println("La mejor opción la tiene la abeja: " + resultadoFinal);
+//        System.out.println(individuos[0]);
+
+
         System.out.println(
-                c.aTexto(Configuracion.GENERACIONES_CON_POBLACIONES));
+                c.aTexto(Configuracion.GENERACIONES_SIN_POBLACIONES));
         double tiempo = c.getProceso().getTiempoProceso() / 1000000000.0;
         System.out.println("Tiempo: " + tiempo + " segundos");
 
+
+    }
+
+    private static Solicitud obtenerSolicitud(int cromosomaValor, List<Solicitud> solicitudList) {
+        Solicitud solicitud;
+        try {
+            solicitud = solicitudList.get(cromosomaValor);
+        } catch (Exception e) {
+            throw new GetRequestException("Se produjo un error al querer recuperar una solicitud " +
+                    "de la lista de Solicitudes");
+        }
+        return solicitud;
     }
 
 }

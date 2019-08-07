@@ -137,7 +137,7 @@ public abstract class SelectorEstocastico implements Selector {
     }
 
     /**
-     * Devuelve un arreglo de tipo {@code Individuo} que representa el pool de
+     * Devuelve un arreglo de tipo {@code IndividuoEntero} que representa el pool de
      * los individuos seleccionados. La forma en que se seleccionen los
      * individuos en este método define la técnica estocástica de la clase que
      * herede de esta clase. Por ejemplo, la clase que implementa este método

@@ -96,7 +96,7 @@ public class SelectorSUS extends SelectorEstocastico {
     }
 
     /**
-     * Devuelve un arreglo de tipo {@code Individuo} que representa el pool de
+     * Devuelve un arreglo de tipo {@code IndividuoEntero} que representa el pool de
      * los individuos seleccionados utilizando la técnica de
      * <em>muestreo estocástico universal</em>.
      *

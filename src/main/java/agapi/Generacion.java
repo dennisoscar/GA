@@ -263,10 +263,10 @@ public class Generacion {
      * <blockquote> Desviación Estándar: es la desviación estándar de la función
      * de aptitud de los individuos de la población.</blockquote>
      *
-     * <blockquote> Mejor Individuo: es el individuo con la mayor función de
+     * <blockquote> Mejor IndividuoEntero: es el individuo con la mayor función de
      * aptitud de la población.</blockquote>
      *
-     * <blockquote> Peor Individuo: es el individuo con la menor función de
+     * <blockquote> Peor IndividuoEntero: es el individuo con la menor función de
      * aptitud de la población.</blockquote>
      *
      * @return una cadena de caracteres con datos de la generación.

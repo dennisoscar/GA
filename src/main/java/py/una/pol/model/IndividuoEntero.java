@@ -19,7 +19,7 @@ package py.una.pol.model;
 
 import agapi.impl.IndividuoCombinatorio;
 
-public class Individuo extends IndividuoCombinatorio {
+public class IndividuoEntero extends IndividuoCombinatorio {
 
     @Override
     public double calcFA() {

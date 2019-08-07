@@ -110,7 +110,7 @@ public class Poblacion {
     /**
      * Retorna un arreglo con los individuos de la población. Los individuos
      * deben ser <em>individuos específicos</em>, es decir, objetos de una clase
-     * que ha heredado de {@link Individuo Individuo} y ha implementado
+     * que ha heredado de {@link Individuo IndividuoEntero} y ha implementado
      * todos sus métodos.
      *
      * @return un arreglo con los individuos de la población
@@ -122,7 +122,7 @@ public class Poblacion {
     /**
      * Establece el arreglo de individuos de la población. Los individuos deben
      * ser <em>individuos específicos</em>, es decir, objetos de una clase que
-     * ha heredado de {@link Individuo Individuo} y ha implementado todos
+     * ha heredado de {@link Individuo IndividuoEntero} y ha implementado todos
      * sus métodos.
      *
      * @param individuos el arreglo de individuos a establecer
@@ -258,7 +258,7 @@ public class Poblacion {
      * {@link Individuo} encargado de producir individuos
      * <em>concretos</em>. Luego, por cada individuo, se hace un llamado al
      * método {@link Individuo#aleatorio() aleatorio} de
-     * {@link Individuo Individuo} que genera cromosomas aleatorios y
+     * {@link Individuo IndividuoEntero} que genera cromosomas aleatorios y
      * finalmente se calcula la media, desviación estándar, mejor y peor
      * individuo utilizando {@code calcMejorPeorMediaDesviacion}.
      */

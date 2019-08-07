@@ -337,7 +337,7 @@ public class Configuracion {
     /**
      * Establece el tipo de <em>individuo especifico</em> que se va a utilizar.
      * Un <em>individuo especifico</em> es un objeto de una clase que ha
-     * heredado de {@link Individuo Individuo} y ha implementado todos sus
+     * heredado de {@link Individuo IndividuoEntero} y ha implementado todos sus
      * métodos, esta es una tarea que corresponde al usuario.
      *
      * @param tipoIndividuo el tipo de individuo a establecer
@@ -361,7 +361,7 @@ public class Configuracion {
      * fijo.
      * <p>
      * Un <em>individuo especifico</em> es un objeto de una clase que ha
-     * heredado de {@link Individuo Individuo} y ha implementado todos sus
+     * heredado de {@link Individuo IndividuoEntero} y ha implementado todos sus
      * métodos, para lo cual, obligatoriamente, debe establecer el valor del
      * tamaño del cromosoma como una variable determinada por el método
      * {@link Individuo#getTamanoCromosoma getTamanoCromosoma}.
@@ -398,7 +398,7 @@ public class Configuracion {
      * representación que el usuario desee al sobrescribir el método
      * {@code toString} del <em>individuo especifico</em>. Se debe recordar que
      * un <em>individuo especifico</em> es una clase que hereda de la clase
-     * {@link Individuo Individuo}.
+     * {@link Individuo IndividuoEntero}.
      *
      * @param opcion puede ser {@code ULTIMA_GENERACION},
      *               {@code GENERACIONES_SIN_POBLACIONES} o

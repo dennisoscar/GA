@@ -90,7 +90,7 @@ public class SelectorRuleta extends SelectorEstocastico {
     }
 
     /**
-     * Devuelve un arreglo de tipo {@code Individuo} que representa el pool de
+     * Devuelve un arreglo de tipo {@code IndividuoEntero} que representa el pool de
      * los individuos seleccionados utilizando el método <em>de la ruleta</em>.
      *
      * @param poblacion  la población de donde se seleccionarán los individuos.

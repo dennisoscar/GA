@@ -135,7 +135,7 @@ public class Proceso {
         StringBuilder sb = new StringBuilder();
 
         sb.append("DATOS DEL PROCESO").append("\n");
-        sb.append("Tipo de Individuo:").append("\t");
+        sb.append("Tipo de IndividuoEntero:").append("\t");
         sb.append(Individuo.getTipoIndividuo().getClass().getName()).append(
                 "\n");
         sb.append("No de Ejecuciones:").append("\t");
@@ -181,7 +181,7 @@ public class Proceso {
      * representación que el usuario desee al sobrescribir el método
      * {@code toString} del <em>individuo especifico</em>. Se debe recordar que
      * un <em>individuo especifico</em> es una clase que hereda de la clase
-     * {@link Individuo Individuo}.
+     * {@link Individuo IndividuoEntero}.
      *
      * @param opcion puede ser {@code Configuracion.ULTIMA_GENERACION},
      *               {@code Configuracion.GENERACIONES_SIN_POBLACIONES} o
