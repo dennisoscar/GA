@@ -9,7 +9,7 @@ public class Asignacion {
     int p;
     int m;
 
-    Asignacion(GrafoMatriz g, resultadoSlot resultado) {
+    public Asignacion(GrafoMatriz g, resultadoSlot resultado) {
 
         this.g = g;
         this.resultado = resultado;

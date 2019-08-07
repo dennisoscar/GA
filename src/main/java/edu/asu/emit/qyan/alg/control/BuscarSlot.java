@@ -10,7 +10,7 @@ public class BuscarSlot {
     public GrafoMatriz g;
     public List<Path> caminos;
 
-    BuscarSlot(GrafoMatriz grafomatriz, List<Path> caminos) {
+    public BuscarSlot(GrafoMatriz grafomatriz, List<Path> caminos) {
         this.g = grafomatriz;
         this.caminos = caminos;
 

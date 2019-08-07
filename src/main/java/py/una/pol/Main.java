@@ -188,7 +188,6 @@ public class Main {
 
 
     }
-
     private static Solicitud obtenerSolicitud(int cromosomaValor, List<Solicitud> solicitudList) {
         Solicitud solicitud;
         try {
