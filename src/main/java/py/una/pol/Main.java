@@ -45,6 +45,8 @@ public class Main {
 
         int contlineatxt = 0;
         int cont = 0;
+        int time = 0;
+        int indiceSlotMayor = 0;
         while (linea != null) {
 
             contlineatxt++;
@@ -66,8 +68,10 @@ public class Main {
             solicitud.setDestino(Integer.parseInt(str_list[1]));
             //	System.out.println(str_list[1]);
             solicitud.setFs(Integer.parseInt(str_list[2]));
+            time = 3;
             //	System.out.println(str_list[2]);
             solicitudes.add(solicitud);
+
 
             linea = bufRead.readLine();
         }
@@ -159,8 +163,8 @@ public class Main {
                         resultadoSlot res = r.concatenarCaminos(fs);
                         if (res != null) {
                             System.out.println(res.toString());
-
                             Asignacion asignar = new Asignacion(g, res);
+                            asignar.marcarSlotUtilizados(time);
                         } else {
                             cont++;
                             System.out.println("No se encontró camino posible.");
@@ -169,14 +173,16 @@ public class Main {
 //                        System.out.println(cromosoma[l]);
                     }
                 }
-
             }
-
+            indiceSlotMayor = obtenerMayorindiceGrafoPorGeneracion(g.grafo);
+            Desasignar des = new Desasignar(g);
+            des.restarTiempo();
         }
 
         System.out.println("#############");
         System.out.println("Cantidad de conexiones entrantes :" + contlineatxt);
         System.out.println("Cantidad de conexiones fallidas :" + cont);
+        System.out.println("El mayor indice de slot del grafo es :  " + indiceSlotMayor);
 //        System.out.println("La mejor opción la tiene la abeja: " + resultadoFinal);
 //        System.out.println(individuos[0]);
 
@@ -197,6 +203,25 @@ public class Main {
                     "de la lista de Solicitudes");
         }
         return solicitud;
+    }
+
+    private static int obtenerMayorindiceGrafoPorGeneracion(Enlace[][] grafo) {
+        int mayorIndice = 0;
+        for (int x = 0; x < grafo.length; x++) {
+            for (int y = 0; y < grafo[x].length; y++) {
+                for (int k = 0; k < grafo[x][y].listafs.length; k++) {
+                    if (grafo[x][y].listafs[k].getLibreOcupado() == 1) {
+                        System.out.println(grafo[x][y].listafs[k].getLibreOcupado());
+                        if (k > mayorIndice) {
+                            mayorIndice = k;
+                        }
+                    }
+
+                }
+
+            }
+        }
+        return mayorIndice;
     }
 
 }
