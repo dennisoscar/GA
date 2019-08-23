@@ -20,14 +20,18 @@ package py.una.pol.model;
 import agapi.impl.IndividuoCombinatorio;
 
 public class IndividuoEntero extends IndividuoCombinatorio {
+    SimuladorRSA simuladorRSA = new SimuladorRSA();
+    ParametrosRetornoRsa parametrosRetornoRsa = new ParametrosRetornoRsa();
 
     @Override
     public double calcFA() {
+
         double fa = 0;
+        double faB = 0;
         int[] s = this.getCromosoma();
-        for (int i = 0; i < s.length; i++) {
-            fa = (double) fa + (i + 1) * s[i];
-        }
+        parametrosRetornoRsa = simuladorRSA.SimulacionRsa(this.getCromosoma());
+        fa = parametrosRetornoRsa.getMaximoExpectro();
+        faB = parametrosRetornoRsa.getCantidadBloqueos();
         return fa;
     }
 

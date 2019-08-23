@@ -17,15 +17,7 @@ public class Desasignar {
 
                 for (int x = 0; x < g.grafo[i][k].listafs.length; x++) {
 
-                    if (g.grafo[i][k].listafs[x].tiempo != 0) {
-                        g.grafo[i][k].listafs[x].tiempo = g.grafo[i][k].listafs[x].tiempo - 1;
-
-                    }
-                    if (g.grafo[i][k].listafs[x].tiempo == 0) {
-
-                        g.grafo[i][k].listafs[x].libreOcupado = 0;
-
-                    }
+                    g.grafo[i][k].listafs[x].libreOcupado = 0;
 
                 }
 
