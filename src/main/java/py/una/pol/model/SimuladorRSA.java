@@ -107,6 +107,8 @@ public class SimuladorRSA {
         int indiceSlotMayor = 0;
         int cont = 0;
         ParametrosRetornoRsa parametrosRetornoRsa = new ParametrosRetornoRsa();
+        Desasignar des = new Desasignar(g);
+        des.restarTiempo();
         //los fs se poenen en idle(se cera el grafo para cada lista de solicitudes)
         for (int l = 0; l < cromosoma.length; l++) {
             Solicitud solicitud = obtenerSolicitud(cromosoma[l], solicitudes);
@@ -135,8 +137,6 @@ public class SimuladorRSA {
 
         parametrosRetornoRsa.setMaximoExpectro(indiceSlotMayor);
         parametrosRetornoRsa.setCantidadBloqueos(cont);
-        Desasignar des = new Desasignar(g);
-        des.restarTiempo();
         return parametrosRetornoRsa;
     }
 }
