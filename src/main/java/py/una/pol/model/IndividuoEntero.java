@@ -25,7 +25,6 @@ public class IndividuoEntero extends IndividuoCombinatorio {
 
     @Override
     public double calcFA() {
-
         double fa = 0;
         double faB = 0;
         int[] s = this.getCromosoma();

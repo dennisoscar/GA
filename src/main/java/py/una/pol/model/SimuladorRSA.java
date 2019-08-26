@@ -119,7 +119,9 @@ public class SimuladorRSA {
                     //graph.get_vertex(1), graph.get_vertex(3), 300);
                     graph.get_vertex(inicio), graph.get_vertex(fin), 4);
 //                        		System.out.println(":" + shortest_paths_list);
+            //instanciar la clase donde se encuentra concatenar caminos para hallar el camino que cumple cn todas las reglas
             BuscarSlot r = new BuscarSlot(g, shortest_paths_list);
+            //busca un camino posible para una demanda teniendo en cuenta la 3 reglas de eon
             resultadoSlot res = r.concatenarCaminos(fs);
             if (res != null) {
                 System.out.println(res.toString());
