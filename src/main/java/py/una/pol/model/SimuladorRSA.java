@@ -23,7 +23,9 @@ public class SimuladorRSA {
     private static Solicitud obtenerSolicitud(int cromosomaValor, List<Solicitud> solicitudList) {
         Solicitud solicitud;
         try {
-            solicitud = solicitudList.get(cromosomaValor);
+            //se pone el valor del cromosoma proque el cromosoma crea valores enteros a partir de 1
+            //y el arraylist empieza en 0 por lo que se coloca -1 para no nos dee error de indice
+            solicitud = solicitudList.get(cromosomaValor - 1);
         } catch (Exception e) {
             throw new GetRequestException("Se produjo un error al querer recuperar una solicitud " +
                     "de la lista de Solicitudes");
