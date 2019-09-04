@@ -36,7 +36,7 @@ public class MainRsa {
         c.setTamanoCromosoma(valoresConfig.getTamanhoCromosoma());
         c.iniciarProceso();
         System.out.println(
-                c.aTexto(Configuracion.GENERACIONES_CON_POBLACIONES));
+                c.aTexto(Configuracion.GENERACIONES_SIN_POBLACIONES));
         double tiempo = c.getProceso().getTiempoProceso() / 1000000000.0;
         System.out.println("Tiempo: " + tiempo + " segundos");
 

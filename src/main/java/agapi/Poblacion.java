@@ -313,10 +313,10 @@ public class Poblacion {
         for (int i = 0; i < tamanoPoblacion; i++) {
             sum = sum + individuos[i].getFA();
             sum2 = sum2 + individuos[i].getFA() * individuos[i].getFA();
-            if (individuos[i].getFA() >= mejorIndividuo.getFA()) {
+            if (individuos[i].getFA() <= mejorIndividuo.getFA()) {
                 mejorIndividuo = individuos[i];
             }
-            if (individuos[i].getFA() <= peorIndividuo.getFA()) {
+            if (individuos[i].getFA() >= peorIndividuo.getFA()) {
                 peorIndividuo = individuos[i];
             }
         }

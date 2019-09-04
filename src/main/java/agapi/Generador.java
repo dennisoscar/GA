@@ -168,17 +168,17 @@ public class Generador {
             sum2 = sum2 + nuevos[i].getFA() * nuevos[i].getFA()
                     + nuevos[i + 1].getFA() * nuevos[i + 1].getFA();
             // calculo del mejor (mayor)
-            if (nuevos[i].getFA() >= mejor.getFA()) {
+            if (nuevos[i].getFA() <= mejor.getFA()) {
                 mejor = nuevos[i];
             }
-            if (nuevos[i + 1].getFA() >= mejor.getFA()) {
+            if (nuevos[i + 1].getFA() <= mejor.getFA()) {
                 mejor = nuevos[i + 1];
             }
             // calculo del peor (menor) y segundoPeor
-            if (nuevos[i].getFA() <= peor.getFA()) {
+            if (nuevos[i].getFA() >= peor.getFA()) {
                 peor = nuevos[i];
             }
-            if (nuevos[i + 1].getFA() <= peor.getFA()) {
+            if (nuevos[i + 1].getFA() >= peor.getFA()) {
                 peor = nuevos[i + 1];
             }
         }
