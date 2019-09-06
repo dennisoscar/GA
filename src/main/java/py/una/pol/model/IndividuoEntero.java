@@ -27,7 +27,7 @@ public class IndividuoEntero extends IndividuoCombinatorio {
     public double calcFA() {
         double fa = 0;
         double faB = 0;
-        int[] s = this.getCromosoma();
+//        int[] s = this.getCromosoma();
         parametrosRetornoRsa = simuladorRSA.SimulacionRsa(this.getCromosoma());
         fa = parametrosRetornoRsa.getMaximoExpectro();
         faB = parametrosRetornoRsa.getCantidadBloqueos();

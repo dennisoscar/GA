@@ -1,36 +1,37 @@
 package edu.asu.emit.qyan.alg.control;
 
-public class GrafoMatriz {
-
-    public Enlace[][] grafo;
+public class GrafoMatrizV2 {
+    public EnlaceV2[][] grafo;
     int nodos;
     int[] cadenaVertices;
 
-    GrafoMatriz() {
-
+    GrafoMatrizV2() {
 
     }
 
-    public GrafoMatriz(int[] serieNodos) {
+    public GrafoMatrizV2(int[] serieNodos) {
         cadenaVertices = new int[serieNodos.length];
         for (int i = 0; i < serieNodos.length; i++) {
             cadenaVertices[i] = serieNodos[i];
         }
         nodos = serieNodos.length;
         //	System.out.println(nodos.length);
-        grafo = new Enlace[serieNodos.length][serieNodos.length];
+        grafo = new EnlaceV2[serieNodos.length][serieNodos.length];
     }
 
-    public void InicializarGrafo(Enlace[][] grafo) {
+    public void InicializarGrafo(EnlaceV2[][] grafo) {
 
         for (int x = 0; x < grafo.length; x++) {
             for (int y = 0; y < grafo[x].length; y++) {
+                //tam es el tamaño que indica la cantidad de fibra en cada enlace
+                grafo[x][y] = new EnlaceV2(0, 0, 5);
                 //tam es el tamaño que indica la cantidad de fs en cada enlace
-                grafo[x][y] = new Enlace(0, 0, 5);
+                for (int k = 0; k < grafo[x][y].listafibra.length; k++) {
 
-                for (int k = 0; k < grafo[x][y].listafs.length; k++) {
+                    for (int i = 0; i < grafo[x][y].listafibra[k].listafs.length; i++) {
+                        grafo[x][y].listafibra[k].listafs[i] = new FrecuenciaSlot(0, 0, 0);
+                    }
 
-                    grafo[x][y].listafs[k] = new FrecuenciaSlot(0, 0, 0);
                 }
 
             }
@@ -58,5 +59,4 @@ public class GrafoMatriz {
         }
         return -1;
     }
-
 }

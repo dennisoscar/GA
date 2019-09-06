@@ -33,13 +33,13 @@ public class SimuladorRSA {
         return solicitud;
     }
 
-    private static int obtenerMayorindiceGrafoPorGeneracion(Enlace[][] grafo) {
+    private static int obtenerMayorindiceGrafoPorSolicitud(Enlace[][] grafo) {
         int mayorIndice = 0;
         for (int x = 0; x < grafo.length; x++) {
             for (int y = 0; y < grafo[x].length; y++) {
                 for (int k = 0; k < grafo[x][y].listafs.length; k++) {
                     if (grafo[x][y].listafs[k].getLibreOcupado() == 1) {
-                        System.out.println(grafo[x][y].listafs[k].getLibreOcupado());
+//                        System.out.println(grafo[x][y].listafs[k].getLibreOcupado());
                         if (k > mayorIndice) {
                             mayorIndice = k;
                         }
@@ -136,7 +136,7 @@ public class SimuladorRSA {
             }
 
         }
-        indiceSlotMayor = obtenerMayorindiceGrafoPorGeneracion(g.grafo);
+        indiceSlotMayor = obtenerMayorindiceGrafoPorSolicitud(g.grafo);
         System.out.println(indiceSlotMayor);
 
         parametrosRetornoRsa.setMaximoExpectro(indiceSlotMayor);
