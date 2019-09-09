@@ -5,11 +5,11 @@ import edu.asu.emit.qyan.alg.model.abstracts.BaseVertex;
 public class Asignacion {
 
     GrafoMatriz g;
-    resultadoSlot resultado;
+    ResultadoSlot resultado;
     int p;
     int m;
 
-    public Asignacion(GrafoMatriz g, resultadoSlot resultado) {
+    public Asignacion(GrafoMatriz g, ResultadoSlot resultado) {
 
         this.g = g;
         this.resultado = resultado;
@@ -70,7 +70,7 @@ public class Asignacion {
 
     }
 
-    public int lugarInicialAsignacion(resultadoSlot resultado) {
+    public int lugarInicialAsignacion(ResultadoSlot resultado) {
 
         int indiceInicio = (resultado.indice - resultado.contador) + 1;
         //	 System.out.println(indiceInicio);

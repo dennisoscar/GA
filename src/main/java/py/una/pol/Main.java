@@ -160,7 +160,7 @@ public class Main {
                                 graph.get_vertex(inicio), graph.get_vertex(fin), 4);
 //                        		System.out.println(":" + shortest_paths_list);
                         BuscarSlot r = new BuscarSlot(g, shortest_paths_list);
-                        resultadoSlot res = r.concatenarCaminos(fs);
+                        ResultadoSlot res = r.concatenarCaminos(fs);
                         if (res != null) {
                             System.out.println(res.toString());
                             Asignacion asignar = new Asignacion(g, res);

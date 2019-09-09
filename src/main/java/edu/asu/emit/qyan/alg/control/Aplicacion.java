@@ -174,7 +174,7 @@ public class Aplicacion {
                                 graph.get_vertex(inicio), graph.get_vertex(fin), 4);
                         //	System.out.println(":" + shortest_paths_list);
                         BuscarSlot r = new BuscarSlot(abe.getG(), shortest_paths_list);
-                        resultadoSlot res = r.concatenarCaminos(fs);
+                        ResultadoSlot res = r.concatenarCaminos(fs);
                         if (res != null) {
                             //		System.out.println(res.toString());
                             System.out.println("######" + res);

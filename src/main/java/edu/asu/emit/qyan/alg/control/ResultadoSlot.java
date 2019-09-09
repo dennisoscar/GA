@@ -4,7 +4,7 @@ import edu.asu.emit.qyan.alg.model.Path;
 
 import java.util.Arrays;
 
-public class resultadoSlot {
+public class ResultadoSlot {
 
     Path camino;
     int[] vectorAsignacion;
@@ -12,7 +12,8 @@ public class resultadoSlot {
     int contador;
     int cantidadfs;
 
-    public resultadoSlot() {
+
+    public ResultadoSlot() {
         super();
     }
 

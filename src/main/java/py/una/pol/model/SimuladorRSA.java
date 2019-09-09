@@ -8,8 +8,10 @@ import exception.GetRequestException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 
 public class SimuladorRSA {
@@ -68,6 +70,7 @@ public class SimuladorRSA {
         graph = new VariableGraph("data/test_16");
         yenAlg = new YenTopKShortestPathsAlg(graph);
         FileReader input = new FileReader("data/conexiones");
+
         BufferedReader bufRead = new BufferedReader(input);
 
         String linea = bufRead.readLine();
@@ -108,9 +111,21 @@ public class SimuladorRSA {
     public ParametrosRetornoRsa SimulacionRsa(int[] cromosoma) {
         int indiceSlotMayor = 0;
         int cont = 0;
+        int cantidadDeCaminos = 0;
         ParametrosRetornoRsa parametrosRetornoRsa = new ParametrosRetornoRsa();
         Desasignar des = new Desasignar(g);
         des.restarTiempo();
+        //traer la cantidad de caminos quiero para el disktra
+        Properties config = new Properties();
+        InputStream configInput = null;
+        configInput = SimuladorRSA.class.getClassLoader().getResourceAsStream("config.properties");
+        try {
+            config.load(configInput);
+        } catch (IOException e) {
+            System.out.println("No se pudo leer la cantidad de caminos del properties");
+        }
+//        System.out.println(config.getProperty("cantidadDeCaminos"));
+        cantidadDeCaminos = Integer.parseInt(config.getProperty("cantidadDeCaminos"));
         //los fs se poenen en idle(se cera el grafo para cada lista de solicitudes)
         for (int l = 0; l < cromosoma.length; l++) {
             Solicitud solicitud = obtenerSolicitud(cromosoma[l], solicitudes);
@@ -119,12 +134,12 @@ public class SimuladorRSA {
             int fs = solicitud.getFs();
             List<Path> shortest_paths_list = yenAlg.get_shortest_paths(
                     //graph.get_vertex(1), graph.get_vertex(3), 300);
-                    graph.get_vertex(inicio), graph.get_vertex(fin), 4);
+                    graph.get_vertex(inicio), graph.get_vertex(fin), cantidadDeCaminos);
 //                        		System.out.println(":" + shortest_paths_list);
             //instanciar la clase donde se encuentra concatenar caminos para hallar el camino que cumple cn todas las reglas
             BuscarSlot r = new BuscarSlot(g, shortest_paths_list);
             //busca un camino posible para una demanda teniendo en cuenta la 3 reglas de eon
-            resultadoSlot res = r.concatenarCaminos(fs);
+            ResultadoSlot res = r.concatenarCaminos(fs);
             if (res != null) {
                 System.out.println(res.toString());
                 Asignacion asignar = new Asignacion(g, res);

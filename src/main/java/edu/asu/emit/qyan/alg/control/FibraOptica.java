@@ -2,6 +2,7 @@ package edu.asu.emit.qyan.alg.control;
 
 public class FibraOptica {
     public int libreOcupado;
+    //representa el indice de la fibra a ser utilizada
     public int id;
     public int tiempo;
 

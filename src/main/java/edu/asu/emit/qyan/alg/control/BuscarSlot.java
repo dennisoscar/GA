@@ -16,12 +16,12 @@ public class BuscarSlot {
 
     }
 
-    public resultadoSlot concatenarCaminos(int fs) {
+    public ResultadoSlot concatenarCaminos(int fs) {
 
-        resultadoSlot resultfalso = null;
+        ResultadoSlot resultfalso = null;
         int contador = 0;
         //	int[] vectorResultado = new int[g.grafo[0][0].listafs.length];
-        resultadoSlot respuesta = new resultadoSlot();
+        ResultadoSlot respuesta = new ResultadoSlot();
         respuesta.vectorAsignacion = new int[g.grafo[0][0].listafs.length];
 
         int res = 0;
@@ -61,6 +61,8 @@ public class BuscarSlot {
                 //	g.grafo[n1][n2].listafs[0].libreOcupado = 1;
                 //	g.grafo[n1][n2].listafs[1].libreOcupado = 1;
                 //	g.grafo[n1][n2].listafs[2].libreOcupado = 1;
+
+                //for fibra inicio
                 for (int x = 0; x < g.grafo[n1][n2].listafs.length; x++) {
 
                     if (g.grafo[n1][n2].listafs[x].libreOcupado == 0 && respuesta.vectorAsignacion[x] == 0)
@@ -72,6 +74,8 @@ public class BuscarSlot {
                     }
 
                 }
+
+                //for fibra fin
             }
 
             // Una vez que tenemos el vector concatenado se recorre para saber si cumple con las condiciones.

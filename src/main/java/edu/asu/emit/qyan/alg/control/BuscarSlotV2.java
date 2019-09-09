@@ -3,6 +3,7 @@ package edu.asu.emit.qyan.alg.control;
 import edu.asu.emit.qyan.alg.model.Path;
 import edu.asu.emit.qyan.alg.model.abstracts.BaseVertex;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BuscarSlotV2 {
@@ -16,12 +17,14 @@ public class BuscarSlotV2 {
 
     }
 
-    public resultadoSlot concatenarCaminos(int fs) {
+    public ResultadoSlot concatenarCaminos(int fs) {
 
-        resultadoSlot resultfalso = null;
+        ResultadoSlot resultfalso = null;
+        ResultadoFibra[] resultadoFibraListFalso = null;
         int contador = 0;
         //	int[] vectorResultado = new int[g.grafo[0][0].listafs.length];
-        resultadoSlot respuesta = new resultadoSlot();
+
+        ResultadoSlot respuesta = new ResultadoSlot();
         respuesta.vectorAsignacion = new int[g.grafo[0][0].listafibra[0].listafs.length];
 
         int res = 0;
@@ -39,6 +42,9 @@ public class BuscarSlotV2 {
             respuesta.camino = cam;
 
             //	GrafoMatriz posicion = new GrafoMatriz(g.cadenaVertices);
+
+            //Se inicializa el vector resultadoFibra para cada camino
+            ResultadoFibra[] resultadoFibraList = new ResultadoFibra[cam.get_vertex_list().size() - 1];
 
             //se concatena los vectores de los fs de cada enlace del primer camino examinado
             for (int i = 0; i < cam.get_vertex_list().size() - 1; i++) {
@@ -61,12 +67,13 @@ public class BuscarSlotV2 {
                 //	g.grafo[n1][n2].listafs[0].libreOcupado = 1;
                 //	g.grafo[n1][n2].listafs[1].libreOcupado = 1;
                 //	g.grafo[n1][n2].listafs[2].libreOcupado = 1;
-                for (int x = 0; x < g.grafo[n1][n2].listafibra.length; x++) {
 
+                for (int x = 0; x < g.grafo[n1][n2].listafibra.length; x++) {
+                    resultadoFibraList[x].setResultadoSlotList(new ArrayList<ResultadoSlot>());
                     for (int j = 0; j < g.grafo[n1][n2].listafibra[x].listafs.length; j++) {
                         //condicion que hace que se cumplan todas las reglas de eon
                         // aca se asegura
-                        if (g.grafo[n1][n2].listafibra[x].listafs[i].libreOcupado == 0 && respuesta.vectorAsignacion[x] == 0)
+                        if (g.grafo[n1][n2].listafibra[x].listafs[j].libreOcupado == 0 && respuesta.vectorAsignacion[j] == 0)
 
                             respuesta.vectorAsignacion[x] = 0;
                         else {
@@ -75,7 +82,58 @@ public class BuscarSlotV2 {
                         }
 
                     }
+                    // Una vez que tenemos el vector concatenado se recorre para saber si cumple con las condiciones.
+                    int contadorActual = 0;
+                    int contadorFinal = 0;
+                    int indiceActual = 0;
+                    int indiceFinal = 0;
 
+                    for (int K = 0; K < respuesta.vectorAsignacion.length; K++) {
+
+                        boolean ban = false;
+
+                        if (respuesta.vectorAsignacion[K] == 0) {
+
+                            contadorActual++;
+                            indiceActual = K;
+                            ban = true;
+                        }
+
+                        if (contadorActual >= fs && contadorActual > contadorFinal) {
+
+                            indiceFinal = indiceActual;
+                            contadorFinal = contadorActual;
+                        }
+                        if (!ban) {
+
+                            contadorActual = 0;
+                        }
+
+                    }
+
+                    if (contadorFinal >= fs) {
+
+                        //  indiceFinal = (indiceFinal - (int)(contadorFinal/2));
+                        respuesta.indice = indiceFinal;
+                        respuesta.contador = contadorFinal;
+                        respuesta.cantidadfs = fs;
+                        res = contadorFinal;
+                        resultadoFibraList[x].addResultadoSlotList(respuesta);
+                        resultadoFibraList[x].setIndiceFibra(x);
+                        System.out.println(resultadoFibraList[x]);
+                        System.out.println(resultadoFibraList[x].getIndiceFibra());
+                        //  res = true;
+                        break;
+                    } else {
+                        //contador si de bloqueo de fibra, es decir, si en esa fibra no se pudo encontrar l
+                        //FS necesarios
+                        contador++;
+                    }
+                }
+                //Si para el conjunto de fibras que pertenece a un enlace no se pudo emcontrar un espacio necesario
+                //para los FS requeridos para la demanada se hace un break y se pasa al siguiente camino.
+                if (contador == g.grafo[n1][n2].listafibra.length) {
+                    break;
                 }
             }
 
