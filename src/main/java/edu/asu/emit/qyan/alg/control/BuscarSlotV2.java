@@ -17,13 +17,15 @@ public class BuscarSlotV2 {
 
     }
 
-    public ResultadoSlot concatenarCaminos(int fs) {
+    public ResultadoSlotV2 concatenarCaminos(int fs) {
 
         ResultadoSlot resultfalso = null;
-        ResultadoFibra[] resultadoFibraListFalso = null;
+        ResultadoSlotV2 resultFalsoV2 = null;
         int contador = 0;
         //	int[] vectorResultado = new int[g.grafo[0][0].listafs.length];
-
+        ResultadoSlotV2 respuestaV2 = new ResultadoSlotV2();
+        respuestaV2.vectorAsignacion = new int[g.grafo[0][0].listafibra[0].listafs.length];
+        respuestaV2.setFibraList(new ArrayList<Integer>());
         ResultadoSlot respuesta = new ResultadoSlot();
         respuesta.vectorAsignacion = new int[g.grafo[0][0].listafibra[0].listafs.length];
 
@@ -44,8 +46,8 @@ public class BuscarSlotV2 {
             //	GrafoMatriz posicion = new GrafoMatriz(g.cadenaVertices);
 
             //Se inicializa el vector resultadoFibra para cada camino
-            ResultadoFibra[] resultadoFibraList = new ResultadoFibra[cam.get_vertex_list().size() - 1];
-
+//            ResultadoFibra[] resultadoFibraList = new ResultadoFibra[cam.get_vertex_list().size() - 1];
+//
             //se concatena los vectores de los fs de cada enlace del primer camino examinado
             for (int i = 0; i < cam.get_vertex_list().size() - 1; i++) {
 
@@ -69,7 +71,8 @@ public class BuscarSlotV2 {
                 //	g.grafo[n1][n2].listafs[2].libreOcupado = 1;
 
                 for (int x = 0; x < g.grafo[n1][n2].listafibra.length; x++) {
-                    resultadoFibraList[x].setResultadoSlotList(new ArrayList<ResultadoSlot>());
+//                    resultadoFibraList[x].setResultadoSlotList(new ArrayList<ResultadoSlot>());
+
                     for (int j = 0; j < g.grafo[n1][n2].listafibra[x].listafs.length; j++) {
                         //condicion que hace que se cumplan todas las reglas de eon
                         // aca se asegura
@@ -114,20 +117,27 @@ public class BuscarSlotV2 {
                     if (contadorFinal >= fs) {
 
                         //  indiceFinal = (indiceFinal - (int)(contadorFinal/2));
-                        respuesta.indice = indiceFinal;
-                        respuesta.contador = contadorFinal;
-                        respuesta.cantidadfs = fs;
+//                        respuesta.indice = indiceFinal;
+//                        respuesta.contador = contadorFinal;
+//                        respuesta.cantidadfs = fs;
+//                        res = contadorFinal;
+                        //para la version de multifibra
+                        respuestaV2.indice = indiceFinal;
+                        respuestaV2.contador = contadorFinal;
+                        respuestaV2.cantidadfs = fs;
+                        respuestaV2.addFibra(x);
                         res = contadorFinal;
-                        resultadoFibraList[x].addResultadoSlotList(respuesta);
-                        resultadoFibraList[x].setIndiceFibra(x);
-                        System.out.println(resultadoFibraList[x]);
-                        System.out.println(resultadoFibraList[x].getIndiceFibra());
+//                        resultadoFibraList[x].addResultadoSlotList(respuesta);
+//                        resultadoFibraList[x].setIndiceFibra(x);
+                        System.out.println(respuestaV2.getFibraList());
                         //  res = true;
                         break;
                     } else {
                         //contador si de bloqueo de fibra, es decir, si en esa fibra no se pudo encontrar l
                         //FS necesarios
                         contador++;
+                        System.out.println("hubo un bloqueo en la fibra:  " + x + " " +
+                                "cantidad de fibras con bloqueo:   " + contador);
                     }
                 }
                 //Si para el conjunto de fibras que pertenece a un enlace no se pudo emcontrar un espacio necesario
@@ -143,11 +153,11 @@ public class BuscarSlotV2 {
             int indiceActual = 0;
             int indiceFinal = 0;
 
-            for (int i = 0; i < respuesta.vectorAsignacion.length; i++) {
+            for (int i = 0; i < respuestaV2.vectorAsignacion.length; i++) {
 
                 boolean ban = false;
 
-                if (respuesta.vectorAsignacion[i] == 0) {
+                if (respuestaV2.vectorAsignacion[i] == 0) {
 
                     contadorActual++;
                     indiceActual = i;
@@ -169,9 +179,9 @@ public class BuscarSlotV2 {
             if (contadorFinal >= fs) {
 
                 //  indiceFinal = (indiceFinal - (int)(contadorFinal/2));
-                respuesta.indice = indiceFinal;
-                respuesta.contador = contadorFinal;
-                respuesta.cantidadfs = fs;
+                respuestaV2.indice = indiceFinal;
+                respuestaV2.contador = contadorFinal;
+                respuestaV2.cantidadfs = fs;
                 res = contadorFinal;
                 //  res = true;
                 break;
@@ -181,10 +191,10 @@ public class BuscarSlotV2 {
         }
 
         if (res >= fs)
-            return respuesta;
+            return respuestaV2;
 
         else {
-            return resultfalso;
+            return resultFalsoV2;
         }
 
     }
