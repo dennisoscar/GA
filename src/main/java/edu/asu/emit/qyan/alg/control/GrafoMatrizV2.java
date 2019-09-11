@@ -19,12 +19,12 @@ public class GrafoMatrizV2 {
         grafo = new EnlaceV2[serieNodos.length][serieNodos.length];
     }
 
-    public void InicializarGrafo(EnlaceV2[][] grafo) {
+    public void InicializarGrafo(EnlaceV2[][] grafo, int tamanhoSlot) {
 
         for (int x = 0; x < grafo.length; x++) {
             for (int y = 0; y < grafo[x].length; y++) {
                 //tam es el tamaño que indica la cantidad de fibra en cada enlace
-                grafo[x][y] = new EnlaceV2(0, 0, 5);
+                grafo[x][y] = new EnlaceV2(0, 0, tamanhoSlot);
                 //tam es el tamaño que indica la cantidad de fs en cada enlace
                 for (int k = 0; k < grafo[x][y].listafibra.length; k++) {
 

@@ -2,23 +2,31 @@ package edu.asu.emit.qyan.alg.control;
 
 import edu.asu.emit.qyan.alg.model.Path;
 import edu.asu.emit.qyan.alg.model.VariableGraph;
+import py.una.pol.model.SimuladorRSA;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.io.InputStream;
+import java.util.*;
 
 public class Aplicacion {
 
     public static void main(String[] args) throws InterruptedException, IOException {
-
+        Properties config = new Properties();
+        InputStream configInput = null;
+        configInput = SimuladorRSA.class.getClassLoader().getResourceAsStream("config.properties");
+        try {
+            config.load(configInput);
+        } catch (IOException e) {
+            System.out.println("No se pudo leer la cantidad de caminos del properties");
+        }
+//        System.out.println(config.getProperty("cantidadDeCaminos"));
+        int tamanhoSlot = Integer.parseInt(config.getProperty("tamanhoSlot"));
         // Matriz que representa la red igual al archivo test_16 que se va a utilar al tener los caminos.
         int[] vertices = {1, 2, 3, 4, 5};
         GrafoMatriz g = new GrafoMatriz(vertices);
-        g.InicializarGrafo(g.grafo);
+        g.InicializarGrafo(g.grafo, tamanhoSlot);
         g.agregarRuta(1, 2, 1, 4);
         g.agregarRuta(1, 3, 1, 4);
         g.agregarRuta(2, 3, 1, 4);

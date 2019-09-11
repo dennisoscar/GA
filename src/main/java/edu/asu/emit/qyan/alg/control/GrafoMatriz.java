@@ -21,12 +21,12 @@ public class GrafoMatriz {
         grafo = new Enlace[serieNodos.length][serieNodos.length];
     }
 
-    public void InicializarGrafo(Enlace[][] grafo) {
+    public void InicializarGrafo(Enlace[][] grafo, int tamanhoSlot) {
 
         for (int x = 0; x < grafo.length; x++) {
             for (int y = 0; y < grafo[x].length; y++) {
                 //tam es el tamaño que indica la cantidad de fs en cada enlace
-                grafo[x][y] = new Enlace(0, 0, 5);
+                grafo[x][y] = new Enlace(0, 0, tamanhoSlot);
 
                 for (int k = 0; k < grafo[x][y].listafs.length; k++) {
 

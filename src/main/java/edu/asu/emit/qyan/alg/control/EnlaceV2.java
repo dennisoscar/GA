@@ -10,7 +10,7 @@ public class EnlaceV2 {
         this.distancia = distancia;
         this.cantfs = cantfs;
         this.listafibra = new FibraOptica[tam];
-        for (int i = 0; i < this.listafibra.length; i++) {
+        for (int i = 0; i <= this.listafibra.length; i++) {
             //inicializar los Fs
             this.listafibra[i].listafs = new FrecuenciaSlot[5];
         }

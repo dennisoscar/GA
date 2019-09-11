@@ -21,10 +21,53 @@ import java.util.Properties;
 
 public class Main {
     public static void main(String[] args) throws IOException {
+        //leer de un archivo properties
+        Properties config = new Properties();
+        InputStream configInput = null;
+        //inicializar variables
+        int numeroEjecuciones = 1;
+        int numeroGeneraciones = 20;
+        double probabilidadDeSeleccion = 0.7;
+        double probabilidadDeCruce = 0.7;
+        double probabilidadDeMutacion = 0.05;
+        int tamanhoPoblacion = 50;
+        int tamanhoCromosoma = 6;
+
+        try {
+            //traer los datos de un archivo .properties
+            configInput = IndividuoEntero.class.getClassLoader().getResourceAsStream("config.properties");
+            config.load(configInput);
+            System.out.println(config.getProperty("numeroEjecuciones"));
+            numeroEjecuciones = Integer.parseInt(config.getProperty("numeroEjecuciones"));
+            System.out.println(config.getProperty("numeroGeneraciones"));
+            numeroGeneraciones = Integer.parseInt(config.getProperty("numeroGeneraciones"));
+            System.out.println(config.getProperty("coeficienteDeSeleccion"));
+            probabilidadDeSeleccion = Double.parseDouble(config.getProperty("coeficienteDeSeleccion"));
+            System.out.println(config.getProperty("probabilidadDeCruce"));
+            probabilidadDeCruce = Double.parseDouble(config.getProperty("probabilidadDeCruce"));
+            System.out.println(config.getProperty("probabilidadDeMutacion"));
+            probabilidadDeMutacion = Double.parseDouble(config.getProperty("probabilidadDeMutacion"));
+            System.out.println(config.getProperty("tamanhoPoblacion"));
+            tamanhoPoblacion = Integer.parseInt(config.getProperty("tamanhoPoblacion"));
+            System.out.println(config.getProperty("tamanhoCromosoma"));
+            tamanhoCromosoma = Integer.parseInt(config.getProperty("tamanhoCromosoma"));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error cargando configuración\n" +
+                    e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        configInput = Main.class.getClassLoader().getResourceAsStream("config.properties");
+        try {
+            config.load(configInput);
+        } catch (IOException e) {
+            System.out.println("No se pudo leer la cantidad de caminos del properties");
+        }
+//        System.out.println(config.getProperty("cantidadDeCaminos"));
+        int tamanhoSlot = Integer.parseInt(config.getProperty("tamanhoSlot"));
         // Matriz que representa la red igual al archivo test_16 que se va a utilar al tener los caminos.
         int[] vertices = {1, 2, 3, 4, 5};
         GrafoMatriz g = new GrafoMatriz(vertices);
-        g.InicializarGrafo(g.grafo);
+        g.InicializarGrafo(g.grafo, tamanhoSlot);
         g.agregarRuta(1, 2, 1, 4);
         g.agregarRuta(1, 3, 1, 4);
         g.agregarRuta(2, 3, 1, 4);
@@ -80,40 +123,6 @@ public class Main {
         bufRead.close();
 
         IndividuoEntero individuo = new IndividuoEntero();
-        //leer de un archivo properties
-        Properties config = new Properties();
-        InputStream configInput = null;
-        //inicializar variables
-        int numeroEjecuciones = 1;
-        int numeroGeneraciones = 20;
-        double probabilidadDeSeleccion = 0.7;
-        double probabilidadDeCruce = 0.7;
-        double probabilidadDeMutacion = 0.05;
-        int tamanhoPoblacion = 50;
-        int tamanhoCromosoma = 6;
-
-        try {
-            //traer los datos de un archivo .properties
-            configInput = IndividuoEntero.class.getClassLoader().getResourceAsStream("config.properties");
-            config.load(configInput);
-            System.out.println(config.getProperty("numeroEjecuciones"));
-            numeroEjecuciones = Integer.parseInt(config.getProperty("numeroEjecuciones"));
-            System.out.println(config.getProperty("numeroGeneraciones"));
-            numeroGeneraciones = Integer.parseInt(config.getProperty("numeroGeneraciones"));
-            System.out.println(config.getProperty("coeficienteDeSeleccion"));
-            probabilidadDeSeleccion = Double.parseDouble(config.getProperty("coeficienteDeSeleccion"));
-            System.out.println(config.getProperty("probabilidadDeCruce"));
-            probabilidadDeCruce = Double.parseDouble(config.getProperty("probabilidadDeCruce"));
-            System.out.println(config.getProperty("probabilidadDeMutacion"));
-            probabilidadDeMutacion = Double.parseDouble(config.getProperty("probabilidadDeMutacion"));
-            System.out.println(config.getProperty("tamanhoPoblacion"));
-            tamanhoPoblacion = Integer.parseInt(config.getProperty("tamanhoPoblacion"));
-            System.out.println(config.getProperty("tamanhoCromosoma"));
-            tamanhoCromosoma = Integer.parseInt(config.getProperty("tamanhoCromosoma"));
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error cargando configuración\n" +
-                    e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
 
 
         //setear valores para la ejecución

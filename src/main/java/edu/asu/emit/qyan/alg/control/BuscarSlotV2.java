@@ -70,7 +70,7 @@ public class BuscarSlotV2 {
                 //	g.grafo[n1][n2].listafs[1].libreOcupado = 1;
                 //	g.grafo[n1][n2].listafs[2].libreOcupado = 1;
 
-                for (int x = 0; x < g.grafo[n1][n2].listafibra.length; x++) {
+                for (int x = 0; x <= g.grafo[n1][n2].listafibra.length; x++) {
 //                    resultadoFibraList[x].setResultadoSlotList(new ArrayList<ResultadoSlot>());
 
                     for (int j = 0; j < g.grafo[n1][n2].listafibra[x].listafs.length; j++) {

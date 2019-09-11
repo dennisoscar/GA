@@ -13,14 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-
-public class SimuladorRSA {
+public class SimuladorRSAMultifibras {
     private static ArrayList<Solicitud> solicitudes;
     private static YenTopKShortestPathsAlg yenAlg;
     private static VariableGraph graph;
     private static int time = 0;
     private static int[] vertices = {1, 2, 3, 4, 5};
-    private static GrafoMatriz g = new GrafoMatriz(vertices);
+    private static GrafoMatrizV2 g = new GrafoMatrizV2(vertices);
 
     private static Solicitud obtenerSolicitud(int cromosomaValor, List<Solicitud> solicitudList) {
         Solicitud solicitud;
@@ -35,20 +34,22 @@ public class SimuladorRSA {
         return solicitud;
     }
 
-    private static int obtenerMayorindiceGrafoPorSolicitud(Enlace[][] grafo) {
+    private static int obtenerMayorindiceGrafoPorSolicitud(EnlaceV2[][] grafo) {
         int mayorIndice = 0;
         for (int x = 0; x < grafo.length; x++) {
             for (int y = 0; y < grafo[x].length; y++) {
-                for (int k = 0; k < grafo[x][y].listafs.length; k++) {
-                    if (grafo[x][y].listafs[k].getLibreOcupado() == 1) {
-//                        System.out.println(grafo[x][y].listafs[k].getLibreOcupado());
-                        if (k > mayorIndice) {
-                            mayorIndice = k;
+                for (int k = 0; k <= grafo[x][y].listafibra.length; k++) {
+                    for (int j = 0; j < g.grafo[x][y].listafibra[k].listafs.length; j++) {
+                        if (grafo[x][y].listafibra[k].listafs[j].getLibreOcupado() == 1) {
+                            System.out.println((grafo[x][y].listafibra[k].listafs[j].getLibreOcupado()));
+                            if (k > mayorIndice) {
+                                mayorIndice = k;
+                            }
                         }
+
                     }
 
                 }
-
             }
         }
         return mayorIndice;
@@ -118,12 +119,12 @@ public class SimuladorRSA {
 
     }
 
-    public ParametrosRetornoRsa SimulacionRsa(int[] cromosoma) {
+    public ParametrosRetornoRsa SimuladorRSAMultifibras(int[] cromosoma) {
         int indiceSlotMayor = 0;
         int cont = 0;
         int cantidadDeCaminos = 0;
         ParametrosRetornoRsa parametrosRetornoRsa = new ParametrosRetornoRsa();
-        Desasignar des = new Desasignar(g);
+        DesasignarV2 des = new DesasignarV2(g);
         des.restarTiempo();
         //traer la cantidad de caminos quiero para el disktra
         Properties config = new Properties();
@@ -147,12 +148,12 @@ public class SimuladorRSA {
                     graph.get_vertex(inicio), graph.get_vertex(fin), cantidadDeCaminos);
 //                        		System.out.println(":" + shortest_paths_list);
             //instanciar la clase donde se encuentra concatenar caminos para hallar el camino que cumple cn todas las reglas
-            BuscarSlot r = new BuscarSlot(g, shortest_paths_list);
+            BuscarSlotV2 r = new BuscarSlotV2(g, shortest_paths_list);
             //busca un camino posible para una demanda teniendo en cuenta la 3 reglas de eon
-            ResultadoSlot res = r.concatenarCaminos(fs);
+            ResultadoSlotV2 res = r.concatenarCaminos(fs);
             if (res != null) {
                 System.out.println(res.toString());
-                Asignacion asignar = new Asignacion(g, res);
+                AsignacionV2 asignar = new AsignacionV2(g, res);
                 asignar.marcarSlotUtilizados(time);
             } else {
                 cont++;
