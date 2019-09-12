@@ -26,6 +26,7 @@ public class BuscarSlotV2 {
         ResultadoSlotV2 respuestaV2 = new ResultadoSlotV2();
         respuestaV2.vectorAsignacion = new int[g.grafo[0][0].listafibra[0].listafs.length];
         respuestaV2.setFibraList(new ArrayList<Integer>());
+
         ResultadoSlot respuesta = new ResultadoSlot();
         respuesta.vectorAsignacion = new int[g.grafo[0][0].listafibra[0].listafs.length];
 
@@ -76,12 +77,12 @@ public class BuscarSlotV2 {
                     for (int j = 0; j < g.grafo[n1][n2].listafibra[x].listafs.length; j++) {
                         //condicion que hace que se cumplan todas las reglas de eon
                         // aca se asegura
-                        if (g.grafo[n1][n2].listafibra[x].listafs[j].libreOcupado == 0 && respuesta.vectorAsignacion[j] == 0)
+                        if (g.grafo[n1][n2].listafibra[x].listafs[j].libreOcupado == 0 && respuestaV2.vectorAsignacion[j] == 0)
 
-                            respuesta.vectorAsignacion[x] = 0;
+                            respuestaV2.vectorAsignacion[x] = 0;
                         else {
 
-                            respuesta.vectorAsignacion[x] = 1;
+                            respuestaV2.vectorAsignacion[x] = 1;
                         }
 
                     }
@@ -91,11 +92,11 @@ public class BuscarSlotV2 {
                     int indiceActual = 0;
                     int indiceFinal = 0;
 
-                    for (int K = 0; K < respuesta.vectorAsignacion.length; K++) {
+                    for (int K = 0; K < respuestaV2.vectorAsignacion.length; K++) {
 
                         boolean ban = false;
 
-                        if (respuesta.vectorAsignacion[K] == 0) {
+                        if (respuestaV2.vectorAsignacion[K] == 0) {
 
                             contadorActual++;
                             indiceActual = K;
