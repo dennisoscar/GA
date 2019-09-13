@@ -27,7 +27,8 @@ public class GrafoMatrizV2 {
                 grafo[x][y] = new EnlaceV2(0, 0, tamanhoSlot);
                 //tam es el tamaño que indica la cantidad de fs en cada enlace
                 for (int k = 0; k < grafo[x][y].listafibra.length; k++) {
-
+                    //instanciar el vector de frecuencySlot dentro de la fibra
+                    grafo[x][y].listafibra[k] = new FibraOptica(tamanhoSlot);
                     for (int i = 0; i < grafo[x][y].listafibra[k].listafs.length; i++) {
                         grafo[x][y].listafibra[k].listafs[i] = new FrecuenciaSlot(0, 0, 0);
                     }

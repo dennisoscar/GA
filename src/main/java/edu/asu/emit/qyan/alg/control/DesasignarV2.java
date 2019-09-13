@@ -14,7 +14,7 @@ public class DesasignarV2 {
 
             for (int k = 0; k < g.grafo.length; k++) {
 
-                for (int x = 0; x <= g.grafo[i][k].listafibra.length; x++) {
+                for (int x = 0; x < g.grafo[i][k].listafibra.length; x++) {
 
                     for (int j = 0; j < g.grafo[i][k].listafibra[x].listafs.length; j++) {
                         g.grafo[i][k].listafibra[x].listafs[j].libreOcupado = 0;

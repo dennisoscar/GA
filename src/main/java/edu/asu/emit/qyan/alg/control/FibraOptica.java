@@ -5,7 +5,6 @@ public class FibraOptica {
     //representa el indice de la fibra a ser utilizada
     public int id;
     public int tiempo;
-
     public FrecuenciaSlot[] listafs;
 
     public FibraOptica(int tam) {

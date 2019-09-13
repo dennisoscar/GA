@@ -4,6 +4,7 @@ import agapi.Configuracion;
 import agapi.impl.SelectorPostCruceSoloHijos;
 import agapi.impl.SelectorTorneo;
 import py.una.pol.model.IndividuoEntero;
+import py.una.pol.model.IndividuoEnteroMultifibras;
 import py.una.pol.model.SimuladorRSAMultifibras;
 import py.una.pol.model.ValoresConfig;
 
@@ -32,7 +33,7 @@ public class MainRsaMultifibras {
         c.setProbabilidadMutacion(valoresConfig.getProbabilidadDeMutacion());
         c.setElitismo(true);
         c.setTamanoPoblacion(valoresConfig.getTamanhoPoblacion());
-        c.setTipoIndividuo(new IndividuoEntero());
+        c.setTipoIndividuo(new IndividuoEnteroMultifibras());
         c.setTamanoCromosoma(valoresConfig.getTamanhoCromosoma());
         c.iniciarProceso();
         System.out.println(
