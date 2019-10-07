@@ -108,7 +108,7 @@ public class SimuladorRSAMultifibras {
             solicitud.setDestino(Integer.parseInt(str_list[1]));
             //	System.out.println(str_list[1]);
             solicitud.setFs(Integer.parseInt(str_list[2]));
-            time = 3;
+            time = Integer.parseInt(str_list[3]);
             //	System.out.println(str_list[2]);
             solicitudes.add(solicitud);
 

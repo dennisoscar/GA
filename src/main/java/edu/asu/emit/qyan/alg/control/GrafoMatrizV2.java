@@ -1,5 +1,11 @@
 package edu.asu.emit.qyan.alg.control;
 
+import py.una.pol.model.SimuladorRSA;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 public class GrafoMatrizV2 {
     public EnlaceV2[][] grafo;
     int nodos;
@@ -20,11 +26,21 @@ public class GrafoMatrizV2 {
     }
 
     public void InicializarGrafo(EnlaceV2[][] grafo, int tamanhoSlot) {
-
+        int tamanhoFibra;
+        Properties config = new Properties();
+        InputStream configInput = null;
+        configInput = SimuladorRSA.class.getClassLoader().getResourceAsStream("config.properties");
+        try {
+            config.load(configInput);
+        } catch (IOException e) {
+            System.out.println("No se pudo leer el tamaño de la fibra del properties");
+        }
+//        System.out.println(config.getProperty("cantidadDeCaminos"));
+        tamanhoFibra = Integer.parseInt(config.getProperty("tamanhoFibra"));
         for (int x = 0; x < grafo.length; x++) {
             for (int y = 0; y < grafo[x].length; y++) {
                 //tam es el tamaño que indica la cantidad de fibra en cada enlace
-                grafo[x][y] = new EnlaceV2(0, 0, tamanhoSlot);
+                grafo[x][y] = new EnlaceV2(0, 0, tamanhoFibra);
                 //tam es el tamaño que indica la cantidad de fs en cada enlace
                 for (int k = 0; k < grafo[x][y].listafibra.length; k++) {
                     //instanciar el vector de frecuencySlot dentro de la fibra

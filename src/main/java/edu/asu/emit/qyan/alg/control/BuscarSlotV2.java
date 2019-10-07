@@ -21,7 +21,6 @@ public class BuscarSlotV2 {
 
         ResultadoSlot resultfalso = null;
         ResultadoSlotV2 resultFalsoV2 = null;
-        int contador = 0;
         //	int[] vectorResultado = new int[g.grafo[0][0].listafs.length];
         ResultadoSlotV2 respuestaV2 = new ResultadoSlotV2();
         respuestaV2.vectorAsignacion = new int[g.grafo[0][0].listafibra[0].listafs.length];
@@ -87,11 +86,13 @@ public class BuscarSlotV2 {
                         }
 
                     }
+                    // TODO: 26/9/19 revisar que es lo necesario para cada fibra del enlace
                     // Una vez que tenemos el vector concatenado se recorre para saber si cumple con las condiciones.
                     int contadorActual = 0;
                     int contadorFinal = 0;
                     int indiceActual = 0;
                     int indiceFinal = 0;
+                    int contador = 0;
 
                     for (int K = 0; K < respuestaV2.vectorAsignacion.length; K++) {
 
@@ -124,28 +125,31 @@ public class BuscarSlotV2 {
 //                        respuesta.cantidadfs = fs;
 //                        res = contadorFinal;
                         //para la version de multifibra
-                        respuestaV2.indice = indiceFinal;
-                        respuestaV2.contador = contadorFinal;
-                        respuestaV2.cantidadfs = fs;
+//                        respuestaV2.indice = indiceFinal;
+//                        respuestaV2.contador = contadorFinal;
+//                        respuestaV2.cantidadfs = fs;
                         respuestaV2.addFibra(x);
-                        res = contadorFinal;
+//                        res = contadorFinal;
+                        System.out.println("fibra:  " + respuestaV2.fibraList.get(x));
+                        System.out.println("\n vectorASignacion para fibra:  " + respuestaV2.fibraList.get(x));
+                        System.out.println(respuestaV2.vectorAsignacion.toString());
 //                        resultadoFibraList[x].addResultadoSlotList(respuesta);
 //                        resultadoFibraList[x].setIndiceFibra(x);
-                        System.out.println(respuestaV2.getFibraList());
+//                        System.out.println(respuestaV2.getFibraList());
                         //  res = true;
                         break;
-                    } else {
-                        //contador si de bloqueo de fibra, es decir, si en esa fibra no se pudo encontrar l
-                        //FS necesarios
-                        contador++;
-                        System.out.println("hubo un bloqueo en la fibra:  " + x + " " +
-                                "cantidad de fibras con bloqueo:   " + contador);
+//                    } else {
+//                        //contador si de bloqueo de fibra, es decir, si en esa fibra no se pudo encontrar l
+//                        //FS necesarios
+//                        contador++;
+//                        System.out.println("hubo un bloqueo en la fibra:  " + x + " " +
+//                                "cantidad de fibras con bloqueo:   " + contador);
+//                        //Si para el conjunto de fibras que pertenece a un enlace no se pudo emcontrar un espacio necesario
+//                        //para los FS requeridos para la demanada se hace un break y se pasa al siguiente camino.
+//                        if (contador == g.grafo[n1][n2].listafibra.length) {
+//                            break;
+//                        }
                     }
-                }
-                //Si para el conjunto de fibras que pertenece a un enlace no se pudo emcontrar un espacio necesario
-                //para los FS requeridos para la demanada se hace un break y se pasa al siguiente camino.
-                if (contador == g.grafo[n1][n2].listafibra.length) {
-                    break;
                 }
             }
 
@@ -180,12 +184,12 @@ public class BuscarSlotV2 {
 
             if (contadorFinal >= fs) {
 
-                //  indiceFinal = (indiceFinal - (int)(contadorFinal/2));
+//                  indiceFinal = (indiceFinal - (int)(contadorFinal/2));
                 respuestaV2.indice = indiceFinal;
                 respuestaV2.contador = contadorFinal;
                 respuestaV2.cantidadfs = fs;
                 res = contadorFinal;
-                //  res = true;
+//                //  res = true;
                 break;
             }
 

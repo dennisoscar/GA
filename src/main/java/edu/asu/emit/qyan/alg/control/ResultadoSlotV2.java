@@ -75,6 +75,6 @@ public class ResultadoSlotV2 {
     @Override
     public String toString() {
         return "resultadoSlot [camino=" + camino + ", vectorAsignacion=" + Arrays.toString(vectorAsignacion)
-                + ", indice=" + indice + ", contador=" + contador + ", cantidadfs=" + cantidadfs + "]";
+                + ", indice=" + indice + ", contador=" + contador + ", ListaFibra=" + Arrays.toString(new List[]{fibraList}) + ", cantidadfs=" + cantidadfs + "]";
     }
 }
