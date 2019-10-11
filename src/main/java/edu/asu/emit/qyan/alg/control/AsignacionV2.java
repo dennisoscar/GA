@@ -16,12 +16,12 @@ public class AsignacionV2 {
     }
 
     public void marcarSlotUtilizados(int tiempo) {
-        System.out.println(resultado);
+//        System.out.println(resultado);
         int mitad = lugarInicialAsignacion(resultado);
 
         for (int i = 0; i < resultado.camino.get_vertex_list().size() - 1; i++) {
 
-            System.out.println("longitud de camino" + resultado.camino.get_vertex_list().size());
+//            System.out.println("longitud de camino" + resultado.camino.get_vertex_list().size());
             BaseVertex id1 = resultado.camino.get_vertex_list().get(i);
             BaseVertex id2 = resultado.camino.get_vertex_list().get(i + 1);
 
@@ -39,21 +39,21 @@ public class AsignacionV2 {
             for (int j = 0; j <= resultado.fibraList.size() - 1; j++) {
                 for (int x = 0; x < resultado.cantidadfs - 1; x++) {
                     if (x == 0) {
-                        System.out.println("fibra: " + (resultado.fibraList.get(j) + "  mitad  " + mitad));
+//                        System.out.println("fibra: " + (resultado.fibraList.get(j) + "  mitad  " + mitad));
                         g.grafo[n1][n2].listafibra[resultado.fibraList.get(j)].listafs[mitad].libreOcupado = 1;
                         g.grafo[n2][n1].listafibra[resultado.fibraList.get(j)].listafs[mitad].libreOcupado = 1;
                         g.grafo[n1][n2].listafibra[resultado.fibraList.get(j)].listafs[mitad].tiempo = tiempo;
                         g.grafo[n2][n1].listafibra[resultado.fibraList.get(j)].listafs[mitad].tiempo = tiempo;
                     } else if (x != 0 && (x % 2) == 0) {
                         mitadizquierda--;
-                        System.out.println("fibra: " + resultado.fibraList.get(j) + "  mitadIzquierda  " + mitadizquierda);
+//                        System.out.println("fibra: " + resultado.fibraList.get(j) + "  mitadIzquierda  " + mitadizquierda);
                         g.grafo[n1][n2].listafibra[resultado.fibraList.get(j)].listafs[mitadizquierda].libreOcupado = 1;
                         g.grafo[n2][n1].listafibra[resultado.fibraList.get(j)].listafs[mitadizquierda].libreOcupado = 1;
                         g.grafo[n1][n2].listafibra[resultado.fibraList.get(j)].listafs[mitadizquierda].tiempo = tiempo;
                         g.grafo[n2][n1].listafibra[resultado.fibraList.get(j)].listafs[mitadizquierda].tiempo = tiempo;
                     } else if (x != 0 && (x % 2) != 0) {
                         mitadderecha++;
-                        System.out.println("fibra: " + resultado.fibraList.get(j) + "  mitarDerecha  " + mitadderecha);
+//                        System.out.println("fibra: " + resultado.fibraList.get(j) + "  mitarDerecha  " + mitadderecha);
                         g.grafo[n1][n2].listafibra[resultado.fibraList.get(j)].listafs[mitadderecha].libreOcupado = 1;
                         g.grafo[n2][n1].listafibra[resultado.fibraList.get(j)].listafs[mitadderecha].libreOcupado = 1;
                         g.grafo[n1][n2].listafibra[resultado.fibraList.get(j)].listafs[mitadderecha].tiempo = tiempo;

@@ -130,9 +130,9 @@ public class BuscarSlotV2 {
 //                        respuestaV2.cantidadfs = fs;
                         respuestaV2.addFibra(x);
 //                        res = contadorFinal;
-                        System.out.println("fibra:  " + respuestaV2.fibraList.get(x));
-                        System.out.println("\n vectorASignacion para fibra:  " + respuestaV2.fibraList.get(x));
-                        System.out.println(respuestaV2.vectorAsignacion.toString());
+//                        System.out.println("fibra:  " + respuestaV2.fibraList.get(x));
+//                        System.out.println("\n vectorASignacion para fibra:  " + respuestaV2.fibraList.get(x));
+//                        System.out.println(respuestaV2.vectorAsignacion.toString());
 //                        resultadoFibraList[x].addResultadoSlotList(respuesta);
 //                        resultadoFibraList[x].setIndiceFibra(x);
 //                        System.out.println(respuestaV2.getFibraList());
