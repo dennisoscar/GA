@@ -45,6 +45,7 @@ public class BuscarSlotV2 {
             auxMatrizFSF = clearMat(auxMatrizFSF);
             System.out.println("Camino nro --> " + cant_caminosCount + "[" + camino + "]");
             respuestaV2.setCamino(camino);
+            respuestaV2.setCantidadfs(fs);
 
             for (int enlaceCount = 0; enlaceCount < camino.get_vertex_list().size() - 1; enlaceCount++) {
                 BaseVertex id1 = camino.get_vertex_list().get(enlaceCount);
