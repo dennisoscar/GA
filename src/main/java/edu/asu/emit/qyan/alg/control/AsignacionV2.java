@@ -35,7 +35,7 @@ public class AsignacionV2 {
             m = n2;
 
 
-            for(int indiceFS = resultado.indiceFS ; indiceFS< resultado.indiceFS + resultado.cantidadfs -1 ; indiceFS++ ){
+            for (int indiceFS = resultado.indiceFS; indiceFS < resultado.indiceFS + resultado.cantidadfs; indiceFS++) {
                 g.grafo[n1][n2].listafibra[resultado.indiceFibra[i]].listafs[indiceFS].libreOcupado= 1;
             }
 

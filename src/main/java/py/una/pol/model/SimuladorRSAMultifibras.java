@@ -155,8 +155,8 @@ public class SimuladorRSAMultifibras {
             ResultadoSlotV2 res = r.concatenarCaminos(fs);
             if (res != null) {
                 System.out.println(res.toString());
-//                AsignacionV2 asignar = new AsignacionV2(g, res);
-//                asignar.marcarSlotUtilizados(time);
+                AsignacionV2 asignar = new AsignacionV2(g, res);
+                asignar.marcarSlotUtilizados(time);
             } else {
                 cont++;
                 System.out.println("No se encontró camino posible.");
