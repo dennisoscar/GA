@@ -142,6 +142,7 @@ public class SimuladorRSA {
             int inicio = solicitud.getOrigen();
             int fin = solicitud.getDestino();
             int fs = solicitud.getFs();
+            //cantidad de rutas tiene que ser un parametro no en duro(4)
             List<Path> shortest_paths_list = yenAlg.get_shortest_paths(
                     //graph.get_vertex(1), graph.get_vertex(3), 300);
                     graph.get_vertex(inicio), graph.get_vertex(fin), cantidadDeCaminos);

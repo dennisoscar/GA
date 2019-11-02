@@ -5,6 +5,8 @@ public class Enlace {
     public int distancia;
     public int cantfs;
     public FrecuenciaSlot[] listafs;
+    //Cambiar por una matriz de fibra/FS
+    //pasar el vector a matriz
 
     public Enlace(int distancia, int cantfs, int tam) {
         super();

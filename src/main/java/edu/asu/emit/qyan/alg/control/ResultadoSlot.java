@@ -8,6 +8,8 @@ public class ResultadoSlot {
 
     Path camino;
     int[] vectorAsignacion;
+    //Se debe cambiar el vector asignación por una matriz
+    //con la misma estructura que el enlace fibra/frecuency Slot
     int indice;
     int contador;
     int cantidadfs;

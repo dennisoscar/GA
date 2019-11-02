@@ -9,5 +9,8 @@
         <module name="AlgoritmoGeneticoPermutación" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="AlgoritmoGeneticoPermutación" target="6" />
+    </bytecodeTargetLevel>
   </component>
 </project>

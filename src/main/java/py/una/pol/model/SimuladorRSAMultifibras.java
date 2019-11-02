@@ -71,13 +71,13 @@ public class SimuladorRSAMultifibras {
         solicitudes = new ArrayList<Solicitud>();
         // Matriz que representa la red igual al archivo test_16 que se va a utilar al tener los caminos.
         g.InicializarGrafo(g.grafo, tamanhoSlot);
-        g.agregarRuta(1, 2, 1, 4);
-        g.agregarRuta(1, 3, 1, 4);
-        g.agregarRuta(2, 3, 1, 4);
-        g.agregarRuta(2, 4, 1, 4);
-        g.agregarRuta(3, 4, 1, 4);
-        g.agregarRuta(3, 5, 1, 4);
-        g.agregarRuta(4, 5, 1, 4);
+        g.agregarRuta(2, 4, 1, tamanhoSlot);
+        g.agregarRuta(1, 3, 1, tamanhoSlot);
+        g.agregarRuta(2, 3, 1, tamanhoSlot);
+        g.agregarRuta(3, 4, 1, tamanhoSlot);
+        g.agregarRuta(3, 5, 1, tamanhoSlot);
+        g.agregarRuta(1, 2, 1, tamanhoSlot);
+        g.agregarRuta(4, 5, 1, tamanhoSlot);
 
         System.out.println("Testing top-k shortest paths!");
         graph = new VariableGraph("data/test_16");

@@ -27,12 +27,10 @@ public class BuscarSlotV2 {
         //Ahora mismo solo se cuenta con una cantidad fija de FS, no es dinamica
         respuestaV2.auxFSResultado = new int[g.grafo[0][0].listafibra[0].listafs.length];
 
-
-        int res = 0;
         //	System.out.println(caminos.size());
         //cargamos en una variable la cantidad de caminos para el primer Request
         int cant_caminos = caminos.size();
-        respuestaV2.indiceFibra = new int[cant_caminos];
+        respuestaV2.indiceFibra = new int[g.grafo[0][0].listafibra.length];
         respuestaV2.indiceFS = -1;
         //inicializamos en 0 la matriz que representa los FS de cada lista de Fibra
 
@@ -43,7 +41,7 @@ public class BuscarSlotV2 {
 
 
             Path camino = caminos.get(cant_caminosCount);
-            int[][] auxMatrizFSF = new int[g.grafo[0][0].listafibra[0].listafs.length][cant_caminos];
+            int[][] auxMatrizFSF = new int[g.grafo[0][0].listafibra[0].listafs.length][camino.get_vertex_list().size() - 1];
             auxMatrizFSF = clearMat(auxMatrizFSF);
             System.out.println("Camino nro --> " + cant_caminosCount + "[" + camino + "]");
             respuestaV2.setCamino(camino);
@@ -66,7 +64,7 @@ public class BuscarSlotV2 {
                     // la variable existFS indica si existe la cantidad de FS que necesita el Request en la fibra
                     boolean existFS = true;
                     int fsCount = 0;
-                    for (int frecuencySlotCount = 0; frecuencySlotCount <= g.grafo[n1][n2].listafibra[fibraCount].listafs.length - fs; frecuencySlotCount++) {
+                    for (int frecuencySlotCount = 0; frecuencySlotCount < g.grafo[n1][n2].listafibra[fibraCount].listafs.length; frecuencySlotCount++) {
                         if (existFS) {
                             fsCount = fs;
                         }
@@ -75,7 +73,7 @@ public class BuscarSlotV2 {
                         ) {
                             fsCount--;
                             existFS = false;
-                            if (fs == 0) {
+                            if (fsCount == 0) {
                                 // 1 indica que apartir de este indice se puede asignar la cantidad de FS que necesita el request
                                 auxMatrizFSF[frecuencySlotCount - fs + 1][enlaceCount] = 1;
                                 // se vuelve atras al indici siguiente del que se guardo anteriormente. para que en la siguuiente iteracion se continue buscando
@@ -94,7 +92,7 @@ public class BuscarSlotV2 {
             }
             respuestaV2.auxFSResultado = clearArray(respuestaV2.auxFSResultado, 1);
             for (int FS_AuxMatrizFSF = 0; FS_AuxMatrizFSF < g.grafo[0][0].listafibra[0].listafs.length; FS_AuxMatrizFSF++) {
-                for (int Col_AuxMatrizFSF = 0; Col_AuxMatrizFSF < cant_caminos; Col_AuxMatrizFSF++) {
+                for (int Col_AuxMatrizFSF = 0; Col_AuxMatrizFSF < camino.get_vertex_list().size() - 1; Col_AuxMatrizFSF++) {
                     if (auxMatrizFSF[FS_AuxMatrizFSF][Col_AuxMatrizFSF] == 0) {
                         respuestaV2.auxFSResultado[FS_AuxMatrizFSF] = 0;
                         break;
@@ -108,7 +106,7 @@ public class BuscarSlotV2 {
                     break;
                 }
             }
-            respuestaV2.indiceFibra = clearArray(respuestaV2.indiceFibra, 0);
+            respuestaV2.indiceFibra = clearArray(respuestaV2.indiceFibra, -1);
             for (int enlaceCount = 0; enlaceCount < camino.get_vertex_list().size() - 1; enlaceCount++) {
                 BaseVertex id1 = camino.get_vertex_list().get(enlaceCount);
                 BaseVertex id2 = camino.get_vertex_list().get(enlaceCount + 1);
