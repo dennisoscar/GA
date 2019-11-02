@@ -3,13 +3,13 @@ package edu.asu.emit.qyan.alg.control;
 import edu.asu.emit.qyan.alg.model.Path;
 import edu.asu.emit.qyan.alg.model.abstracts.BaseVertex;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BuscarSlotV2 {
 
     public GrafoMatrizV2 g;
     public List<Path> caminos;
+    public int indiceFS = 0;
 
     public BuscarSlotV2(GrafoMatrizV2 grafomatriz, List<Path> caminos) {
         this.g = grafomatriz;
@@ -23,38 +23,34 @@ public class BuscarSlotV2 {
         ResultadoSlotV2 resultFalsoV2 = null;
         //	int[] vectorResultado = new int[g.grafo[0][0].listafs.length];
         ResultadoSlotV2 respuestaV2 = new ResultadoSlotV2();
-        respuestaV2.vectorAsignacion = new int[g.grafo[0][0].listafibra[0].listafs.length];
-        respuestaV2.setFibraList(new ArrayList<Integer>());
+        //se inicializa el vector resultado con la cantidad de frecuncySlot de una fibra del grafo
+        //Ahora mismo solo se cuenta con una cantidad fija de FS, no es dinamica
+        respuestaV2.auxFSResultado = new int[g.grafo[0][0].listafibra[0].listafs.length];
 
-        ResultadoSlot respuesta = new ResultadoSlot();
-        respuesta.vectorAsignacion = new int[g.grafo[0][0].listafibra[0].listafs.length];
 
         int res = 0;
         //	System.out.println(caminos.size());
-        for (int a = 0; a < caminos.size(); a++) {
-            for (int i = 0; i < respuestaV2.vectorAsignacion.length; i++) {
+        //cargamos en una variable la cantidad de caminos para el primer Request
+        int cant_caminos = caminos.size();
+        respuestaV2.indiceFibra = new int[cant_caminos];
+        respuestaV2.indiceFS = -1;
+        //inicializamos en 0 la matriz que representa los FS de cada lista de Fibra
 
-                respuestaV2.vectorAsignacion[i] = 0;
-            }
 
-            Path cam = caminos.get(a);
+        for (int cant_caminosCount = 0; cant_caminosCount < cant_caminos; cant_caminosCount++) {
 
-            System.out.println(cam);
+            //limpiamos los array auxiliares por cada camnino.
 
-            respuestaV2.camino = cam;
 
-            //	GrafoMatriz posicion = new GrafoMatriz(g.cadenaVertices);
+            Path camino = caminos.get(cant_caminosCount);
+            int[][] auxMatrizFSF = new int[g.grafo[0][0].listafibra[0].listafs.length][cant_caminos];
+            auxMatrizFSF = clearMat(auxMatrizFSF);
+            System.out.println("Camino nro --> " + cant_caminosCount + "[" + camino + "]");
+            respuestaV2.setCamino(camino);
 
-            //Se inicializa el vector resultadoFibra para cada camino
-//            ResultadoFibra[] resultadoFibraList = new ResultadoFibra[cam.get_vertex_list().size() - 1];
-//
-            //se concatena los vectores de los fs de cada enlace del primer camino examinado
-            for (int i = 0; i < cam.get_vertex_list().size() - 1; i++) {
-
-                //	   System.out.println(cam.get_vertex_list().size());
-
-                BaseVertex id1 = cam.get_vertex_list().get(i);
-                BaseVertex id2 = cam.get_vertex_list().get(i + 1);
+            for (int enlaceCount = 0; enlaceCount < camino.get_vertex_list().size() - 1; enlaceCount++) {
+                BaseVertex id1 = camino.get_vertex_list().get(enlaceCount);
+                BaseVertex id2 = camino.get_vertex_list().get(enlaceCount + 1);
 
                 int k = id1.get_id();
                 int l = id2.get_id();
@@ -63,145 +59,97 @@ public class BuscarSlotV2 {
                 // 	System.out.println(l);
                 int n1 = g.posicionNodo(k);
                 int n2 = g.posicionNodo(l);
-                //	System.out.println(n1);
-                //	System.out.println(n2);
+                int[][] auxFS = new int[g.grafo[n1][n2].listafibra[0].listafs.length][g.grafo[n1][n2].listafibra.length];
+                //recorremos cada lista de fibra que pertenece al enlace
+                for (int fibraCount = 0; fibraCount < g.grafo[n1][n2].listafibra.length; fibraCount++) {
+                    //recorremos cafa FS que pertenece a la fibra
+                    // la variable existFS indica si existe la cantidad de FS que necesita el Request en la fibra
+                    boolean existFS = true;
+                    int fsCount = 0;
+                    for (int frecuencySlotCount = 0; frecuencySlotCount <= g.grafo[n1][n2].listafibra[fibraCount].listafs.length - fs; frecuencySlotCount++) {
+                        if (existFS) {
+                            fsCount = fs;
+                        }
+                        //0 significa que esta libre el FS de la fibra
+                        if (g.grafo[n1][n2].listafibra[fibraCount].listafs[frecuencySlotCount].libreOcupado == 0
+                        ) {
+                            fsCount--;
+                            existFS = false;
+                            if (fs == 0) {
+                                // 1 indica que apartir de este indice se puede asignar la cantidad de FS que necesita el request
+                                auxMatrizFSF[frecuencySlotCount - fs + 1][enlaceCount] = 1;
+                                // se vuelve atras al indici siguiente del que se guardo anteriormente. para que en la siguuiente iteracion se continue buscando
+                                frecuencySlotCount = frecuencySlotCount - fs + 1;
+                                existFS = true;
+                            }
 
-                //	g.grafo[n1][n2].listafs[0].libreOcupado = 1;
-                //	g.grafo[n1][n2].listafs[1].libreOcupado = 1;
-                //	g.grafo[n1][n2].listafs[2].libreOcupado = 1;
-
-                for (int x = 0; x < g.grafo[n1][n2].listafibra.length; x++) {
-//                    System.out.println(g.grafo[n1][n2].listafibra.length);
-//                    resultadoFibraList[x].setResultadoSlotList(new ArrayList<ResultadoSlot>());
-
-                    for (int j = 0; j < g.grafo[n1][n2].listafibra[x].listafs.length; j++) {
-                        //condicion que hace que se cumplan todas las reglas de eon
-                        // aca se asegura
-                        if (g.grafo[n1][n2].listafibra[x].listafs[j].libreOcupado == 0 && respuestaV2.vectorAsignacion[j] == 0)
-
-                            respuestaV2.vectorAsignacion[j] = 0;
-                        else {
-
-                            respuestaV2.vectorAsignacion[j] = 1;
+                        } else {
+                            existFS = true;
                         }
 
                     }
-                    // TODO: 26/9/19 revisar que es lo necesario para cada fibra del enlace
-                    // Una vez que tenemos el vector concatenado se recorre para saber si cumple con las condiciones.
-                    int contadorActual = 0;
-                    int contadorFinal = 0;
-                    int indiceActual = 0;
-                    int indiceFinal = 0;
-                    int contador = 0;
+                }
 
-                    for (int K = 0; K < respuestaV2.vectorAsignacion.length; K++) {
 
-                        boolean ban = false;
-
-                        if (respuestaV2.vectorAsignacion[K] == 0) {
-
-                            contadorActual++;
-                            indiceActual = K;
-                            ban = true;
-                        }
-
-                        if (contadorActual >= fs && contadorActual > contadorFinal) {
-
-                            indiceFinal = indiceActual;
-                            contadorFinal = contadorActual;
-                        }
-                        if (!ban) {
-
-                            contadorActual = 0;
-                        }
-
-                    }
-
-                    if (contadorFinal >= fs) {
-
-                        //  indiceFinal = (indiceFinal - (int)(contadorFinal/2));
-//                        respuesta.indice = indiceFinal;
-//                        respuesta.contador = contadorFinal;
-//                        respuesta.cantidadfs = fs;
-//                        res = contadorFinal;
-                        //para la version de multifibra
-//                        respuestaV2.indice = indiceFinal;
-//                        respuestaV2.contador = contadorFinal;
-//                        respuestaV2.cantidadfs = fs;
-                        respuestaV2.addFibra(x);
-//                        res = contadorFinal;
-//                        System.out.println("fibra:  " + respuestaV2.fibraList.get(x));
-//                        System.out.println("\n vectorASignacion para fibra:  " + respuestaV2.fibraList.get(x));
-//                        System.out.println(respuestaV2.vectorAsignacion.toString());
-//                        resultadoFibraList[x].addResultadoSlotList(respuesta);
-//                        resultadoFibraList[x].setIndiceFibra(x);
-//                        System.out.println(respuestaV2.getFibraList());
-                        //  res = true;
+            }
+            respuestaV2.auxFSResultado = clearArray(respuestaV2.auxFSResultado, 1);
+            for (int FS_AuxMatrizFSF = 0; FS_AuxMatrizFSF < g.grafo[0][0].listafibra[0].listafs.length; FS_AuxMatrizFSF++) {
+                for (int Col_AuxMatrizFSF = 0; Col_AuxMatrizFSF < cant_caminos; Col_AuxMatrizFSF++) {
+                    if (auxMatrizFSF[FS_AuxMatrizFSF][Col_AuxMatrizFSF] == 0) {
+                        respuestaV2.auxFSResultado[FS_AuxMatrizFSF] = 0;
                         break;
-//                    } else {
-//                        //contador si de bloqueo de fibra, es decir, si en esa fibra no se pudo encontrar l
-//                        //FS necesarios
-//                        contador++;
-//                        System.out.println("hubo un bloqueo en la fibra:  " + x + " " +
-//                                "cantidad de fibras con bloqueo:   " + contador);
-//                        //Si para el conjunto de fibras que pertenece a un enlace no se pudo emcontrar un espacio necesario
-//                        //para los FS requeridos para la demanada se hace un break y se pasa al siguiente camino.
-//                        if (contador == g.grafo[n1][n2].listafibra.length) {
-//                            break;
-//                        }
                     }
                 }
             }
-
-            // Una vez que tenemos el vector concatenado se recorre para saber si cumple con las condiciones.
-            int contadorActual = 0;
-            int contadorFinal = 0;
-            int indiceActual = 0;
-            int indiceFinal = 0;
-
-            for (int i = 0; i < respuestaV2.vectorAsignacion.length; i++) {
-
-                boolean ban = false;
-
-                if (respuestaV2.vectorAsignacion[i] == 0) {
-
-                    contadorActual++;
-                    indiceActual = i;
-                    ban = true;
+            // se selecciona el indice de FS por FF.
+            for (int fsCount = 0; fsCount < g.grafo[0][0].listafibra[0].listafs.length; fsCount++) {
+                if (respuestaV2.auxFSResultado[fsCount] == 1) {
+                    respuestaV2.setIndiceFS(fsCount);
+                    break;
                 }
-
-                if (contadorActual >= fs && contadorActual > contadorFinal) {
-
-                    indiceFinal = indiceActual;
-                    contadorFinal = contadorActual;
-                }
-                if (!ban) {
-
-                    contadorActual = 0;
-                }
-
             }
+            respuestaV2.indiceFibra = clearArray(respuestaV2.indiceFibra, 0);
+            for (int enlaceCount = 0; enlaceCount < camino.get_vertex_list().size() - 1; enlaceCount++) {
+                BaseVertex id1 = camino.get_vertex_list().get(enlaceCount);
+                BaseVertex id2 = camino.get_vertex_list().get(enlaceCount + 1);
 
-            if (contadorFinal >= fs) {
+                int k = id1.get_id();
+                int l = id2.get_id();
 
-//                  indiceFinal = (indiceFinal - (int)(contadorFinal/2));
-                respuestaV2.indice = indiceFinal;
-                respuestaV2.contador = contadorFinal;
-                respuestaV2.cantidadfs = fs;
-                res = contadorFinal;
-//                //  res = true;
-                break;
+                //   System.out.println(k);
+                // 	System.out.println(l);
+                int n1 = g.posicionNodo(k);
+                int n2 = g.posicionNodo(l);
+
+                //se selecciona el indice de fibra por FF
+                for (int fibraCount = 0; fibraCount < g.grafo[n1][n2].listafibra.length; fibraCount++) {
+                    if (g.grafo[n1][n2].listafibra[fibraCount].listafs[respuestaV2.getIndiceFS()].libreOcupado == 0) {
+                        respuestaV2.indiceFibra[enlaceCount] = fibraCount;
+                        break;
+                    }
+                }
             }
-
-
+            if (respuestaV2.getIndiceFS() != -1) {
+                System.out.println("Respuesta --> " + respuestaV2.toString());
+                return respuestaV2;
+            }
         }
+        return resultFalsoV2;
+    }
 
-        if (res >= fs)
-            return respuestaV2;
-
-        else {
-            return resultFalsoV2;
+    int[][] clearMat(int[][] mat) {
+        for (int a = 0; a < mat.length; a++) {
+            for (int b = 0; b < mat[a].length; b++) {
+                mat[a][b] = 0;
+            }
         }
+        return mat;
+    }
 
+    int[] clearArray(int[] array, int value) {
+        for (int a = 0; a < array.length; a++) {
+            array[a] = value;
+        }
+        return array;
     }
 }

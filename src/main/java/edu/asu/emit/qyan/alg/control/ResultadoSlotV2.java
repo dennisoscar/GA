@@ -3,15 +3,15 @@ package edu.asu.emit.qyan.alg.control;
 import edu.asu.emit.qyan.alg.model.Path;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class ResultadoSlotV2 {
     Path camino;
-    int[] vectorAsignacion;
+    int[] auxFSResultado;
     int indice;
     int contador;
     int cantidadfs;
-    List<Integer> fibraList;
+    int[] indiceFibra;
+    int indiceFS;
 
 
     public ResultadoSlotV2() {
@@ -26,14 +26,13 @@ public class ResultadoSlotV2 {
         this.camino = camino;
     }
 
-    public int[] getVectorAsignacion() {
-        return vectorAsignacion;
+    public int[] getAuxFSResultado() {
+        return auxFSResultado;
     }
 
-    public void setVectorAsignacion(int[] vectorAsignacion) {
-        this.vectorAsignacion = vectorAsignacion;
+    public void setAuxFSResultado(int[] auxFSResultado) {
+        this.auxFSResultado = auxFSResultado;
     }
-
 
     public int getIndice() {
         return indice;
@@ -60,21 +59,26 @@ public class ResultadoSlotV2 {
         this.cantidadfs = cantidadfs;
     }
 
-    public List<Integer> getFibraList() {
-        return fibraList;
+    public int[] getIndiceFibra() {
+        return indiceFibra;
     }
 
-    public void setFibraList(List<Integer> fibraList) {
-        this.fibraList = fibraList;
+    public void setIndiceFibra(int[] indiceFibra) {
+        this.indiceFibra = indiceFibra;
     }
 
-    public void addFibra(Integer fibra) {
-        this.fibraList.add(fibra);
+    public int getIndiceFS() {
+        return indiceFS;
+    }
+
+    public void setIndiceFS(int indiceFS) {
+        this.indiceFS = indiceFS;
     }
 
     @Override
     public String toString() {
-        return "resultadoSlot [camino=" + camino + ", vectorAsignacion=" + Arrays.toString(vectorAsignacion)
-                + ", indice=" + indice + ", contador=" + contador + ", ListaFibra=" + Arrays.toString(new List[]{fibraList}) + ", cantidadfs=" + cantidadfs + "]";
+        return "resultadoSlot [camino=" + camino + ", Array de AUXRespuesta de FS=" + Arrays.toString(auxFSResultado)
+                + ", indice de fibra " + Arrays.toString(indiceFibra) + ", indiceFS " + indiceFS +
+                "]";
     }
 }
