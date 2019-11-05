@@ -33,11 +33,16 @@ public class AsignacionV2 {
 
             p = n1;
             m = n2;
-
-
-            for (int indiceFS = resultado.indiceFS; indiceFS < resultado.indiceFS + resultado.cantidadfs; indiceFS++) {
-                g.grafo[n1][n2].listafibra[resultado.indiceFibra[i]].listafs[indiceFS].libreOcupado= 1;
+            //Se agrega for de fibra para la asignación ya que al querer asignar en la fibra
+            // de indice "enlace" en caso de que exista 1 fibra y halla  enlaces da un array indexof 1
+            for (int fibraCount = 0; fibraCount < g.grafo[n1][n2].listafibra.length; fibraCount++) {
+                for (int indiceFS = resultado.indiceFS; indiceFS < resultado.indiceFS + resultado.cantidadfs; indiceFS++) {
+                    g.grafo[n1][n2].listafibra[fibraCount].listafs[indiceFS].libreOcupado = 1;
+                }
             }
+            /*for (int indiceFS = resultado.indiceFS; indiceFS < resultado.indiceFS + resultado.cantidadfs; indiceFS++) {
+                g.grafo[n1][n2].listafibra[resultado.indiceFibra[i]].listafs[indiceFS].libreOcupado= 1;
+            }*/
 
 
 

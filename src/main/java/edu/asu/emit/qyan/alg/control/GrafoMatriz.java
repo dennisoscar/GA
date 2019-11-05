@@ -32,7 +32,6 @@ public class GrafoMatriz {
 
                     grafo[x][y].listafs[k] = new FrecuenciaSlot(0, 0, 0);
                 }
-
             }
         }
     }
