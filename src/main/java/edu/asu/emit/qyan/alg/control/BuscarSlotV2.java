@@ -107,6 +107,12 @@ public class BuscarSlotV2 {
                     break;
                 }
             }
+            //En caso de no poder sellecionar el indice de fs significa que no cumplen las condiciones
+            //de contiguidad para ese camino por lo que ya retornamos resultfalso que indica 1 bloqueo
+            if (respuestaV2.getIndiceFS() == -1) {
+                System.out.println("Respuesta --> " + respuestaV2.toString());
+                return resultFalsoV2;
+            }
             respuestaV2.indiceFibra = clearArray(respuestaV2.indiceFibra, -1);
             for (int enlaceCount = 0; enlaceCount < camino.get_vertex_list().size() - 1; enlaceCount++) {
                 BaseVertex id1 = camino.get_vertex_list().get(enlaceCount);
@@ -121,9 +127,13 @@ public class BuscarSlotV2 {
                 int n2 = g.posicionNodo(l);
 
                 //se selecciona el indice de fibra por FF
+                //Se cambia el guardado del indice de fibra en el indice del enlace
+                //ya que en caso de que se 1 sola fibra y halla 2 enlaces en el camino
+                // da un arrayindexof 1 ya que supera la cantidad fibras donde guardar.
                 for (int fibraCount = 0; fibraCount < g.grafo[n1][n2].listafibra.length; fibraCount++) {
                     if (g.grafo[n1][n2].listafibra[fibraCount].listafs[respuestaV2.getIndiceFS()].libreOcupado == 0) {
-                        respuestaV2.indiceFibra[enlaceCount] = fibraCount;
+//                        respuestaV2.indiceFibra[enlaceCount] = fibraCount;
+                        respuestaV2.indiceFibra[fibraCount] = fibraCount;
                         break;
                     }
                 }
