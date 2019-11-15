@@ -38,7 +38,7 @@ public class SimuladorRSAMultifibras {
         int mayorIndice = 0;
         for (int x = 0; x < grafo.length; x++) {
             for (int y = 0; y < grafo[x].length; y++) {
-                for (int k = 0; k < grafo[x][y].listafibra.length - 1; k++) {
+                for (int k = 0; k < grafo[x][y].listafibra.length; k++) {
                     for (int j = 0; j < g.grafo[x][y].listafibra[k].listafs.length; j++) {
                         if (grafo[x][y].listafibra[k].listafs[j].getLibreOcupado() == 1) {
                             System.out.println((grafo[x][y].listafibra[k].listafs[j].getLibreOcupado()));

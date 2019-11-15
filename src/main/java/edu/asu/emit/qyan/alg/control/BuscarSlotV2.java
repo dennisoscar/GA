@@ -30,7 +30,7 @@ public class BuscarSlotV2 {
         //	System.out.println(caminos.size());
         //cargamos en una variable la cantidad de caminos para el primer Request
         int cant_caminos = caminos.size();
-        respuestaV2.indiceFibra = new int[g.grafo[0][0].listafibra.length];
+//        respuestaV2.indiceFibra = new int[g.grafo[0][0].listafibra.length];
         respuestaV2.indiceFS = -1;
         //inicializamos en 0 la matriz que representa los FS de cada lista de Fibra
 
@@ -41,6 +41,7 @@ public class BuscarSlotV2 {
 
 
             Path camino = caminos.get(cant_caminosCount);
+            respuestaV2.indiceFibra = new int[camino.get_vertex_list().size() - 1];
             int[][] auxMatrizFSF = new int[g.grafo[0][0].listafibra[0].listafs.length][camino.get_vertex_list().size() - 1];
             auxMatrizFSF = clearMat(auxMatrizFSF);
             System.out.println("Camino nro --> " + cant_caminosCount + "[" + camino + "]");
@@ -109,38 +110,37 @@ public class BuscarSlotV2 {
             }
             //En caso de no poder sellecionar el indice de fs significa que no cumplen las condiciones
             //de contiguidad para ese camino por lo que ya retornamos resultfalso que indica 1 bloqueo
-            if (respuestaV2.getIndiceFS() == -1) {
-                System.out.println("Respuesta --> " + respuestaV2.toString());
-                return resultFalsoV2;
-            }
-            respuestaV2.indiceFibra = clearArray(respuestaV2.indiceFibra, -1);
-            for (int enlaceCount = 0; enlaceCount < camino.get_vertex_list().size() - 1; enlaceCount++) {
-                BaseVertex id1 = camino.get_vertex_list().get(enlaceCount);
-                BaseVertex id2 = camino.get_vertex_list().get(enlaceCount + 1);
+            if(respuestaV2.getIndiceFS()!=-1) {
+                respuestaV2.indiceFibra = clearArray(respuestaV2.indiceFibra, -1);
+                for (int enlaceCount = 0; enlaceCount < camino.get_vertex_list().size() - 1; enlaceCount++) {
+                    BaseVertex id1 = camino.get_vertex_list().get(enlaceCount);
+                    BaseVertex id2 = camino.get_vertex_list().get(enlaceCount + 1);
 
-                int k = id1.get_id();
-                int l = id2.get_id();
+                    int k = id1.get_id();
+                    int l = id2.get_id();
 
-                //   System.out.println(k);
-                // 	System.out.println(l);
-                int n1 = g.posicionNodo(k);
-                int n2 = g.posicionNodo(l);
+                    //   System.out.println(k);
+                    // 	System.out.println(l);
+                    int n1 = g.posicionNodo(k);
+                    int n2 = g.posicionNodo(l);
 
-                //se selecciona el indice de fibra por FF
-                //Se cambia el guardado del indice de fibra en el indice del enlace
-                //ya que en caso de que se 1 sola fibra y halla 2 enlaces en el camino
-                // da un arrayindexof 1 ya que supera la cantidad fibras donde guardar.
-                for (int fibraCount = 0; fibraCount < g.grafo[n1][n2].listafibra.length; fibraCount++) {
-                    if (g.grafo[n1][n2].listafibra[fibraCount].listafs[respuestaV2.getIndiceFS()].libreOcupado == 0) {
-//                        respuestaV2.indiceFibra[enlaceCount] = fibraCount;
-                        respuestaV2.indiceFibra[fibraCount] = fibraCount;
-                        break;
+                    //se selecciona el indice de fibra por FF
+                    //Se cambia el guardado del indice de fibra en el indice del enlace
+                    //ya que en caso de que se 1 sola fibra y halla 2 enlaces en el camino
+                    // da un arrayindexof 1 ya que supera la cantidad fibras donde guardar.
+                    for (int fibraCount = 0; fibraCount < g.grafo[n1][n2].listafibra.length; fibraCount++) {
+                        if (g.grafo[n1][n2].listafibra[fibraCount].listafs[respuestaV2.getIndiceFS()].libreOcupado == 0) {
+                            respuestaV2.indiceFibra[enlaceCount] = fibraCount;
+                            //se creo esta linea para solucionar un fix que no sabemos si esta bien
+//                        respuestaV2.indiceFibra[fibraCount] = fibraCount;
+                            break;
+                        }
                     }
                 }
-            }
-            if (respuestaV2.getIndiceFS() != -1) {
-                System.out.println("Respuesta --> " + respuestaV2.toString());
-                return respuestaV2;
+                if (respuestaV2.getIndiceFS() != -1) {
+                    System.out.println("Respuesta --> " + respuestaV2.toString());
+                    return respuestaV2;
+                }
             }
         }
         return resultFalsoV2;

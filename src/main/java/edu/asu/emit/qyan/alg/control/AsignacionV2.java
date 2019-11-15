@@ -35,14 +35,18 @@ public class AsignacionV2 {
             m = n2;
             //Se agrega for de fibra para la asignación ya que al querer asignar en la fibra
             // de indice "enlace" en caso de que exista 1 fibra y halla  enlaces da un array indexof 1
-            for (int fibraCount = 0; fibraCount < g.grafo[n1][n2].listafibra.length; fibraCount++) {
-                for (int indiceFS = resultado.indiceFS; indiceFS < resultado.indiceFS + resultado.cantidadfs; indiceFS++) {
-                    g.grafo[n1][n2].listafibra[fibraCount].listafs[indiceFS].libreOcupado = 1;
-                }
-            }
-            /*for (int indiceFS = resultado.indiceFS; indiceFS < resultado.indiceFS + resultado.cantidadfs; indiceFS++) {
+//            for (int fibraCount = 0; fibraCount < g.grafo[n1][n2].listafibra.length; fibraCount++) {
+//                for (int indiceFS = resultado.indiceFS; indiceFS < resultado.indiceFS + resultado.cantidadfs; indiceFS++) {
+//                    g.grafo[n1][n2].listafibra[fibraCount].listafs[indiceFS].libreOcupado = 1;
+//                }
+//            }
+
+
+            //este es siguiendo la logica del profe
+            for (int indiceFS = resultado.indiceFS; indiceFS < resultado.indiceFS + resultado.cantidadfs; indiceFS++) {
                 g.grafo[n1][n2].listafibra[resultado.indiceFibra[i]].listafs[indiceFS].libreOcupado= 1;
-            }*/
+                g.grafo[n2][n1].listafibra[resultado.indiceFibra[i]].listafs[indiceFS].libreOcupado= 1;
+            }
 
 
 
@@ -103,6 +107,8 @@ public class AsignacionV2 {
             }
             System.out.println("######");
         }
+        System.out.println("######");
+
     }
 
     public int lugarInicialAsignacion(ResultadoSlotV2 resultado) {
