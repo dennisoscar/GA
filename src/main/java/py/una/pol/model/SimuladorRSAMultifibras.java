@@ -78,6 +78,10 @@ public class SimuladorRSAMultifibras {
         g.agregarRuta(3, 5, 1, tamanhoSlot);
         g.agregarRuta(1, 2, 1, tamanhoSlot);
         g.agregarRuta(4, 5, 1, tamanhoSlot);
+        String matrizAdyacenciaString = config.getProperty("matrizAdyacencia");
+        loadMatrizAdyacencia(matrizAdyacenciaString);
+        g.isMatrizAdyacencia = Boolean.valueOf(config.getProperty("isMatrizAdyacencia"));
+
 
         System.out.println("Testing top-k shortest paths!");
         graph = new VariableGraph("data/test_16");
@@ -118,6 +122,21 @@ public class SimuladorRSAMultifibras {
 
 //        System.out.print("solicitudes entrantes:" + solicitudes);
         bufRead.close();
+
+    }
+
+    private void loadMatrizAdyacencia(String adyacenciaString){
+        String[] matAdyacenciaString= adyacenciaString.split("/");
+        g.matrizAdyacencia = new boolean[matAdyacenciaString.length][matAdyacenciaString.length];
+        for(int i = 0 ; i < matAdyacenciaString.length ; i++)
+        {
+            String[] rowMatAdyacencia= matAdyacenciaString[i].split(",");
+            for( int j = 1 ; j <= (matAdyacenciaString[i].length()/2) ; j++)
+            {
+                g.matrizAdyacencia[Integer.parseInt(rowMatAdyacencia[0])-1][Integer.parseInt(rowMatAdyacencia[j])-1]= true;
+                g.matrizAdyacencia[Integer.parseInt(rowMatAdyacencia[j])-1][Integer.parseInt(rowMatAdyacencia[0])-1]= true;
+            }
+        }
 
     }
 

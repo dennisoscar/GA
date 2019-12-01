@@ -46,6 +46,12 @@ public class AsignacionV2 {
             for (int indiceFS = resultado.indiceFS; indiceFS < resultado.indiceFS + resultado.cantidadfs; indiceFS++) {
                 g.grafo[n1][n2].listafibra[resultado.indiceFibra[i]].listafs[indiceFS].libreOcupado= 1;
                 g.grafo[n2][n1].listafibra[resultado.indiceFibra[i]].listafs[indiceFS].libreOcupado= 1;
+                for(int fibraAdyacente=0 ; fibraAdyacente < g.matrizAdyacencia[n1].length && g.isMatrizAdyacencia != false;  fibraAdyacente++){
+                    if(g.matrizAdyacencia[fibraAdyacente][resultado.indiceFibra[i]]==true){
+                        g.grafo[n1][n2].listafibra[fibraAdyacente].listafs[indiceFS].libreOcupado++;
+                        g.grafo[n2][n1].listafibra[fibraAdyacente].listafs[indiceFS].libreOcupado++;
+                    }
+                }
             }
 
 
@@ -99,16 +105,15 @@ public class AsignacionV2 {
 //                }
 //            }
             for (int j = 0; j < g.grafo[0][0].listafibra.length; j++) {
-                System.out.println("Para la fibra:  " + j);
+                System.out.println("Para la fibra: " + (j+1) + "    Enlace " + (p+1) + "---"+ (m+1));
                 for (int x = 0; x < g.grafo[0][0].listafibra[j].listafs.length; x++) {
-                    System.out.print("Estado del slot " + g.grafo[p][m].listafibra[j].listafs[x].libreOcupado + "  ");
+                    System.out.print("Estado del slot ["+(x+1)+"]-->" + g.grafo[p][m].listafibra[j].listafs[x].libreOcupado + "  ");
                     System.out.println("Tiempo " + g.grafo[p][m].listafibra[j].listafs[x].tiempo);
                 }
             }
             System.out.println("######");
         }
         System.out.println("######");
-
     }
 
     public int lugarInicialAsignacion(ResultadoSlotV2 resultado) {

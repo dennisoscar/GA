@@ -8,8 +8,10 @@ import java.util.Properties;
 
 public class GrafoMatrizV2 {
     public EnlaceV2[][] grafo;
+    public boolean[][] matrizAdyacencia;
     int nodos;
     int[] cadenaVertices;
+    public boolean isMatrizAdyacencia;
 
     GrafoMatrizV2() {
 
