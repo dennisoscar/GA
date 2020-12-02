@@ -17,7 +17,7 @@ public class MainRsaMultifibras {
     public static void main(String[] args) throws IOException {
         SimuladorRSAMultifibras simuladorRSAMultifibras = new SimuladorRSAMultifibras();
         ValoresConfig valoresConfig = new ValoresConfig();
-        //se inicializa los valores del gefo
+        //se inicializa los valores del grafo
         //se leen la lista de solicitudes de un archivo
         simuladorRSAMultifibras.LoadDataSimulations();
         //se leen los datos necesarios para inicializar la ejecución del GA

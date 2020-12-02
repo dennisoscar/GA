@@ -177,6 +177,22 @@ public abstract class Individuo implements Comparable<Individuo> {
      * {@link agapi.impl.IndividuoCombinatorio}. Es <b>muy importante</b> que
      * dicha función sea <b>positiva</b> y de <b>maximizar</b>, para lo cual se
      * deben utilizar los artificios matemáticos necesarios.
+     * Esto es una copia pero se le envia un parametro indicando el indice del individuo
+     * que  se esta calculando
+     *
+     */
+    public abstract double calcFAforMultifiber(Integer individuoId);
+
+
+    /**
+     * Calcula el valor de la función de aptitud . Dicho cálculo es especifico
+     * del problema a tratar y es una función cuya variable independiente es el
+     * cromosoma del individuo. Este cromosoma puede ser diseñado por el usuario
+     * o proveniente de alguna clase preconfigurada como
+     * {@link agapi.impl.IndividuoBinario} o
+     * {@link agapi.impl.IndividuoCombinatorio}. Es <b>muy importante</b> que
+     * dicha función sea <b>positiva</b> y de <b>maximizar</b>, para lo cual se
+     * deben utilizar los artificios matemáticos necesarios.
      *
      * @return el valor de la función de aptitud calculado
      */

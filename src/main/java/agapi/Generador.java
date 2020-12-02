@@ -144,17 +144,17 @@ public class Generador {
                     generacion.getPoblacion(), 2);
             if (gnaCruce.nextDouble() < Generacion.getProbabilidadCruce()) {
                 hijos = padres[0].cruce(padres[1]);
-                hijos[0].setFA(hijos[0].calcFA());
-                hijos[1].setFA(hijos[1].calcFA());
+                hijos[0].setFA(hijos[0].calcFAforMultifiber(null));
+                hijos[1].setFA(hijos[1].calcFAforMultifiber(null));
                 if (gnaMutacion.nextDouble() < Generacion
                         .getProbabilidadMutacion()) {
                     hijos[0].mutacion();
-                    hijos[0].setFA(hijos[0].calcFA());
+                    hijos[0].setFA(hijos[0].calcFAforMultifiber(null));
                 }
                 if (gnaMutacion.nextDouble() < Generacion
                         .getProbabilidadMutacion()) {
                     hijos[1].mutacion();
-                    hijos[1].setFA(hijos[1].calcFA());
+                    hijos[1].setFA(hijos[1].calcFAforMultifiber(null));
                 }
                 exitosos = Generacion.getSelectorPostCruce()
                         .seleccionPostCruce(padres, hijos);

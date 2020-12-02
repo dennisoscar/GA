@@ -268,7 +268,7 @@ public class Poblacion {
         for (int i = 0; i < tamanoPoblacion; i++) {
             individuos[i] = Individuo.fabricaIndividuo();
             individuos[i].aleatorio();
-            individuos[i].setFA(individuos[i].calcFA());
+            individuos[i].setFA(individuos[i].calcFAforMultifiber(Integer.valueOf(i)));
         }
         calcMejorPeorMediaDesviacion();
     }

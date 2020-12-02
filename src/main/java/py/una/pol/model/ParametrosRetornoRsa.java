@@ -3,6 +3,7 @@ package py.una.pol.model;
 public class ParametrosRetornoRsa {
     int maximoExpectro;
     int cantidadBloqueos;
+    int[] cromosomaOrdenado;
 
     public ParametrosRetornoRsa(int maximoExpectro, int cantidadBloqueos) {
         this.maximoExpectro = maximoExpectro;
@@ -26,5 +27,13 @@ public class ParametrosRetornoRsa {
 
     public void setCantidadBloqueos(int cantidadBloqueos) {
         this.cantidadBloqueos = cantidadBloqueos;
+    }
+
+    public int[] getCromosomaOrdenado() {
+        return cromosomaOrdenado;
+    }
+
+    public void setCromosomaOrdenado(int[] cromosomaOrdenado) {
+        this.cromosomaOrdenado = cromosomaOrdenado;
     }
 }

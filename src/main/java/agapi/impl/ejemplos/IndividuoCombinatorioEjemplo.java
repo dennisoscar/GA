@@ -48,6 +48,16 @@ public class IndividuoCombinatorioEjemplo extends IndividuoCombinatorio {
     }
 
     @Override
+    public double calcFAforMultifiber(Integer individuoId) {
+        double fa = 0;
+        int[] s = this.getCromosoma();
+        for (int i = 0; i < s.length; i++) {
+            fa = (double) fa + (i + 1) * s[i];
+        }
+        return fa;
+    }
+
+    @Override
     public double calcFA() {
         double fa = 0;
         int[] s = this.getCromosoma();

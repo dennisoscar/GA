@@ -1,21 +1,28 @@
 package py.una.pol.model;
 
 public class Solicitud {
-
+    private int id;
     private int origen;
     private int destino;
     private int fs;
 
     public Solicitud() {
-
     }
 
     public Solicitud(int origen, int destino, int fs) {
+
         this.origen = origen;
         this.destino = destino;
         this.fs = fs;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getOrigen() {
         return origen;

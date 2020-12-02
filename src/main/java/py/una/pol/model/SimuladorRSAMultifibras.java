@@ -9,12 +9,10 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 public class SimuladorRSAMultifibras {
-    private static ArrayList<Solicitud> solicitudes;
+    private static List<Solicitud> solicitudes;
     private static YenTopKShortestPathsAlg yenAlg;
     private static VariableGraph graph;
     private static int time = 0;
@@ -41,10 +39,10 @@ public class SimuladorRSAMultifibras {
                 for (int k = 0; k < grafo[x][y].listafibra.length; k++) {
                     for (int j = 0; j < g.grafo[x][y].listafibra[k].listafs.length; j++) {
                         if (grafo[x][y].listafibra[k].listafs[j].getLibreOcupado() == 1) {
-                            System.out.println((grafo[x][y].listafibra[k].listafs[j].getLibreOcupado()));
+//                            System.out.println((grafo[x][y].listafibra[k].listafs[j].getLibreOcupado()));
                             if (j > mayorIndice) {
-                                System.out.println("Para fibra: " + k);
-                                System.out.println("valor indice: " + j + "  " + "\nvalor aux: " + mayorIndice);
+                                System.out.println("Para fibra: " + (k+1) + " y enlace: [" + (x+1) + "," + (y+1) + "]");
+                                System.out.println("valor indice: " + (j+1) + "  " + "\nvalor aux: " + mayorIndice);
                                 mayorIndice = j;
                             }
                         }
@@ -54,7 +52,7 @@ public class SimuladorRSAMultifibras {
                 }
             }
         }
-        return mayorIndice;
+        return mayorIndice+1;
     }
 
     public void LoadDataSimulations() throws IOException {
@@ -79,8 +77,10 @@ public class SimuladorRSAMultifibras {
         g.agregarRuta(1, 2, 1, tamanhoSlot);
         g.agregarRuta(4, 5, 1, tamanhoSlot);
         String matrizAdyacenciaString = config.getProperty("matrizAdyacencia");
-        loadMatrizAdyacencia(matrizAdyacenciaString);
-        g.isMatrizAdyacencia = Boolean.valueOf(config.getProperty("isMatrizAdyacencia"));
+        if(Boolean.valueOf(config.getProperty("isMatrizAdyacencia"))) {
+            loadMatrizAdyacencia(matrizAdyacenciaString);
+            g.isMatrizAdyacencia = Boolean.valueOf(config.getProperty("isMatrizAdyacencia"));
+        }
 
 
         System.out.println("Testing top-k shortest paths!");
@@ -106,7 +106,7 @@ public class SimuladorRSAMultifibras {
 
             String[] str_list = linea.trim().split("\\s*,\\s*");
             Solicitud solicitud = new Solicitud();
-
+            solicitud.setId(cont++);
             solicitud.setOrigen(Integer.parseInt(str_list[0]));
             //	System.out.println("origen:" + str_list[0]);
             solicitud.setDestino(Integer.parseInt(str_list[1]));
@@ -115,6 +115,8 @@ public class SimuladorRSAMultifibras {
             time = Integer.parseInt(str_list[3]);
             //	System.out.println(str_list[2]);
             solicitudes.add(solicitud);
+
+//            Collections.sort(solicitudes, getFSComparator());
 
 
             linea = bufRead.readLine();
@@ -140,7 +142,7 @@ public class SimuladorRSAMultifibras {
 
     }
 
-    public ParametrosRetornoRsa SimuladorRSAMultifibras(int[] cromosoma) {
+    public ParametrosRetornoRsa SimuladorRSAMultifibras(int[] cromosoma, Integer individuoId) {
         int indiceSlotMayor = 0;
         int cont = 0;
         int cantidadDeCaminos = 0;
@@ -158,6 +160,27 @@ public class SimuladorRSAMultifibras {
         }
 //        System.out.println(config.getProperty("cantidadDeCaminos"));
         cantidadDeCaminos = Integer.parseInt(config.getProperty("cantidadDeCaminos"));
+        Integer primerIndividuo = -1;
+        /**
+         * ordenamos las solicitudes de mayor a menor con respecto al FS de cada solicitud
+         * Collections.sort
+         */
+        int [] cromosomaOrdenado = new int[cromosoma.length];
+        if(individuoId!= null && individuoId.equals(0)) {
+            Collections.sort(solicitudes, this.getFSComparator());
+            for (int k = 0; k < cromosoma.length; k++) {
+                cromosoma[k] = k + 1;
+                cromosomaOrdenado[k]=solicitudes.get(k).getId()+1;
+            }
+            /**
+             *
+             * devolvemos el cromosoma ordenado de acuerdo fs (de mayor a menor) de las  solicitudes  en el
+             * archivo y cada elemento hace referencia a la fila donde se encuentran las solicitudes en el
+             * archivo de conexion
+             *
+             */
+            parametrosRetornoRsa.setCromosomaOrdenado(cromosomaOrdenado);
+        }
         //los fs se poenen en idle(se cera el grafo para cada lista de solicitudes)
         for (int l = 0; l < cromosoma.length; l++) {
             Solicitud solicitud = obtenerSolicitud(cromosoma[l], solicitudes);
@@ -184,10 +207,23 @@ public class SimuladorRSAMultifibras {
 
         }
         indiceSlotMayor = obtenerMayorindiceGrafoPorSolicitud(g.grafo);
-        System.out.println(indiceSlotMayor);
+//        System.out.println(indiceSlotMayor);
 
         parametrosRetornoRsa.setMaximoExpectro(indiceSlotMayor);
         parametrosRetornoRsa.setCantidadBloqueos(cont);
         return parametrosRetornoRsa;
     }
+
+    public static Comparator<Solicitud> getFSComparator()
+    {
+        Comparator comp = new Comparator<Solicitud>(){
+            @Override
+            public int compare(Solicitud s1, Solicitud s2)
+            {
+                return String.valueOf(s2.getFs()).compareTo(String.valueOf(s1.getFs()));
+            }
+        };
+        return comp;
+    }
+
 }

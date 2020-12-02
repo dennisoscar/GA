@@ -24,6 +24,11 @@ public class IndividuoEntero extends IndividuoCombinatorio {
     ParametrosRetornoRsa parametrosRetornoRsa = new ParametrosRetornoRsa();
 
     @Override
+    public double calcFAforMultifiber(Integer individuoId) {
+        return 0;
+    }
+
+    @Override
     public double calcFA() {
         double fa = 0;
         double faB = 0;

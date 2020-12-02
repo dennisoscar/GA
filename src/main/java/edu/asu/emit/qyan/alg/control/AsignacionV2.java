@@ -46,10 +46,11 @@ public class AsignacionV2 {
             for (int indiceFS = resultado.indiceFS; indiceFS < resultado.indiceFS + resultado.cantidadfs; indiceFS++) {
                 g.grafo[n1][n2].listafibra[resultado.indiceFibra[i]].listafs[indiceFS].libreOcupado= 1;
                 g.grafo[n2][n1].listafibra[resultado.indiceFibra[i]].listafs[indiceFS].libreOcupado= 1;
-                for (int fibraAdyacente = 0; fibraAdyacente < g.matrizAdyacencia[resultado.indiceFibra[i]].length && g.isMatrizAdyacencia != false; fibraAdyacente++) {
+                for (int fibraAdyacente = 0; fibraAdyacente < g.matrizAdyacencia[resultado.indiceFibra[i]].length
+                        && g.isMatrizAdyacencia != false; fibraAdyacente++) {
                     if(g.matrizAdyacencia[fibraAdyacente][resultado.indiceFibra[i]]==true){
-                        g.grafo[n1][n2].listafibra[fibraAdyacente].listafs[indiceFS].libreOcupado++;
-                        g.grafo[n2][n1].listafibra[fibraAdyacente].listafs[indiceFS].libreOcupado++;
+                        g.grafo[n1][n2].listafibra[fibraAdyacente].listafs[indiceFS].libreOcupado=999;
+                        g.grafo[n2][n1].listafibra[fibraAdyacente].listafs[indiceFS].libreOcupado=999;
                     }
                 }
             }
