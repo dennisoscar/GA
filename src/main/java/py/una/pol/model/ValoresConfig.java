@@ -6,15 +6,18 @@ public class ValoresConfig {
     double probabilidadDeSeleccion;
     double probabilidadDeCruce;
     double probabilidadDeMutacion;
+    double probabilidadSelectorPostCruce;
     int tamanhoPoblacion;
     int tamanhoCromosoma;
 
-    public ValoresConfig(int numeroEjecuciones, int numeroGeneraciones, double probabilidadDeSeleccion, double probabilidadDeCruce, double probabilidadDeMutacion, int tamanhoPoblacion, int tamanhoCromosoma) {
+    public ValoresConfig(int numeroEjecuciones, int numeroGeneraciones, double probabilidadDeSeleccion,
+                         double probabilidadDeCruce, double probabilidadDeMutacion, int tamanhoPoblacion, int tamanhoCromosoma, double probabilidadSelectorPostCruce) {
         this.numeroEjecuciones = numeroEjecuciones;
         this.numeroGeneraciones = numeroGeneraciones;
         this.probabilidadDeSeleccion = probabilidadDeSeleccion;
         this.probabilidadDeCruce = probabilidadDeCruce;
         this.probabilidadDeMutacion = probabilidadDeMutacion;
+        this.probabilidadSelectorPostCruce = probabilidadSelectorPostCruce;
         this.tamanhoPoblacion = tamanhoPoblacion;
         this.tamanhoCromosoma = tamanhoCromosoma;
     }
@@ -44,6 +47,14 @@ public class ValoresConfig {
 
     public void setProbabilidadDeSeleccion(double probabilidadDeSeleccion) {
         this.probabilidadDeSeleccion = probabilidadDeSeleccion;
+    }
+
+    public double getProbabilidadSelectorPostCruce() {
+        return probabilidadSelectorPostCruce;
+    }
+
+    public void setProbabilidadSelectorPostCruce(double probabilidadSelectorPostCruce) {
+        this.probabilidadSelectorPostCruce = probabilidadSelectorPostCruce;
     }
 
     public double getProbabilidadDeCruce() {

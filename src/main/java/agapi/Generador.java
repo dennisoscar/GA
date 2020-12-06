@@ -144,20 +144,33 @@ public class Generador {
                     generacion.getPoblacion(), 2);
             if (gnaCruce.nextDouble() < Generacion.getProbabilidadCruce()) {
                 hijos = padres[0].cruce(padres[1]);
-                hijos[0].setFA(hijos[0].calcFAforMultifiber(null));
-                hijos[1].setFA(hijos[1].calcFAforMultifiber(null));
+//                hijos[0].setFA(hijos[0].calcFAforMultifiber(null));
+//                hijos[1].setFA(hijos[1].calcFAforMultifiber(null));
                 if (gnaMutacion.nextDouble() < Generacion
                         .getProbabilidadMutacion()) {
                     hijos[0].mutacion();
-                    hijos[0].setFA(hijos[0].calcFAforMultifiber(null));
+//                    hijos[0].setFA(hijos[0].calcFAforMultifiber(null));
                 }
                 if (gnaMutacion.nextDouble() < Generacion
                         .getProbabilidadMutacion()) {
                     hijos[1].mutacion();
-                    hijos[1].setFA(hijos[1].calcFAforMultifiber(null));
+//                    hijos[1].setFA(hijos[1].calcFAforMultifiber(null));
                 }
-                exitosos = Generacion.getSelectorPostCruce()
-                        .seleccionPostCruce(padres, hijos);
+                hijos[0].setFA(hijos[0].calcFAforMultifiber(null));
+                hijos[1].setFA(hijos[1].calcFAforMultifiber(null));
+                /**
+                 * si el valor obtenido en gnaMutacion.nextDouble() es menor al valor obtenido en
+                 * Generacion.getProbabilidadSelectorPostCruce() se envia false al metodo seleccionPostCruce
+                 * eso hace que solo los hijos pasen a la siguiente generacion, en el caso contrario se realiza
+                 * la competencia entre padres e hijos y pasan los dos mejores a la siguiente generacion
+                 */
+                if (gnaMutacion.nextDouble() < Generacion.getProbabilidadSelectorPostCruce()){
+                    exitosos = Generacion.getSelectorPostCruce()
+                            .seleccionPostCruce(padres, hijos, false);
+                }else {
+                    exitosos = Generacion.getSelectorPostCruce()
+                        .seleccionPostCruce(padres, hijos, true);
+                }
             } else {
                 exitosos = padres;
             }

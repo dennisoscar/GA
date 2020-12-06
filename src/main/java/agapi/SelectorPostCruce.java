@@ -49,5 +49,5 @@ public interface SelectorPostCruce {
      * @param hijos  los 2 individuos productos del cruce
      * @return los 2 individuos seleccionados para la siguiente generación
      */
-    Individuo[] seleccionPostCruce(Individuo[] padres, Individuo[] hijos);
+    Individuo[] seleccionPostCruce(Individuo[] padres, Individuo[] hijos, boolean activarSelector);
 }

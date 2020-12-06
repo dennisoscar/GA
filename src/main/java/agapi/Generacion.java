@@ -58,6 +58,8 @@ public class Generacion {
     private static boolean elitismo;
     private Poblacion poblacion;
     private Generador generador;
+    private static double probabilidadSelectorPostCruce;
+    private Individuo mejorIndividuoGlobal = null;
 
     /**
      *
@@ -152,6 +154,22 @@ public class Generacion {
             throw new IllegalArgumentException(
                     "probabilidadCruce debe estar dentro del rango (0,1)");
         }
+    }
+
+    public static double getProbabilidadSelectorPostCruce() {
+        return probabilidadSelectorPostCruce;
+    }
+
+    public static void setProbabilidadSelectorPostCruce(double probabilidadSelectorPostCruce) {
+        Generacion.probabilidadSelectorPostCruce = probabilidadSelectorPostCruce;
+    }
+
+    public Individuo getMejorIndividuoGlobal() {
+        return mejorIndividuoGlobal;
+    }
+
+    public void setMejorIndividuoGlobal(Individuo mejorIndividuoGlobal) {
+        this.mejorIndividuoGlobal = mejorIndividuoGlobal;
     }
 
     /**
@@ -284,6 +302,8 @@ public class Generacion {
         sb.append("\n");
         sb.append(" Desviacion: ");
         sb.append(String.format("%, .2f", poblacion.getDesviacion()));
+        sb.append("\n");
+        sb.append(" Mejor Individuo Global: ").append(this.getMejorIndividuoGlobal());
         sb.append("\n");
         return sb.toString();
     }

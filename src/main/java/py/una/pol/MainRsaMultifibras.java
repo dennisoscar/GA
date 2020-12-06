@@ -1,6 +1,7 @@
 package py.una.pol;
 
 import agapi.Configuracion;
+import agapi.impl.SelectorPostCruceCombinado;
 import agapi.impl.SelectorPostCruceSoloHijos;
 import agapi.impl.SelectorTorneo;
 import py.una.pol.model.IndividuoEntero;
@@ -28,9 +29,10 @@ public class MainRsaMultifibras {
         c.setNumeroGeneraciones(valoresConfig.getNumeroGeneraciones());
 //        c.setSelector(new SelectorSUS(new FuncionClasico()));
         c.setSelector(new SelectorTorneo(valoresConfig.getProbabilidadDeSeleccion()));
-        c.setSelectorPostCruce(new SelectorPostCruceSoloHijos());
+        c.setSelectorPostCruce(new SelectorPostCruceCombinado());
         c.setProbabilidadCruce(valoresConfig.getProbabilidadDeCruce());
         c.setProbabilidadMutacion(valoresConfig.getProbabilidadDeMutacion());
+        c.setProbabilidadSelectorPostCruce(valoresConfig.getProbabilidadSelectorPostCruce());
         c.setElitismo(true);
         c.setTamanoPoblacion(valoresConfig.getTamanhoPoblacion());
         c.setTipoIndividuo(new IndividuoEnteroMultifibras());
@@ -53,6 +55,7 @@ public class MainRsaMultifibras {
         double probabilidadDeSeleccion = 0.7;
         double probabilidadDeCruce = 0.7;
         double probabilidadDeMutacion = 0.05;
+        double probabilidadSelectorPostCruce = 0.2;
         int tamanhoPoblacion = 50;
         int tamanhoCromosoma = 6;
 
@@ -70,6 +73,8 @@ public class MainRsaMultifibras {
             probabilidadDeCruce = Double.parseDouble(config.getProperty("probabilidadDeCruce"));
             System.out.println(config.getProperty("probabilidadDeMutacion"));
             probabilidadDeMutacion = Double.parseDouble(config.getProperty("probabilidadDeMutacion"));
+            System.out.println(config.getProperty("probabilidadSelectorPostCruce"));
+            probabilidadSelectorPostCruce = Double.parseDouble(config.getProperty("probabilidadSelectorPostCruce"));
             System.out.println(config.getProperty("tamanhoPoblacion"));
             tamanhoPoblacion = Integer.parseInt(config.getProperty("tamanhoPoblacion"));
             System.out.println(config.getProperty("tamanhoCromosoma"));
@@ -85,6 +90,7 @@ public class MainRsaMultifibras {
         valoresConfig.setProbabilidadDeCruce(probabilidadDeCruce);
         valoresConfig.setProbabilidadDeMutacion(probabilidadDeMutacion);
         valoresConfig.setProbabilidadDeSeleccion(probabilidadDeSeleccion);
+        valoresConfig.setProbabilidadSelectorPostCruce(probabilidadSelectorPostCruce);
         valoresConfig.setTamanhoCromosoma(tamanhoCromosoma);
         valoresConfig.setTamanhoPoblacion(tamanhoPoblacion);
         return valoresConfig;

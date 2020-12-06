@@ -44,7 +44,7 @@ public class SelectorPostCruceSoloHijos implements SelectorPostCruce {
      * @return los 2 individuos seleccionados para la siguiente generación
      */
     @Override
-    public Individuo[] seleccionPostCruce(Individuo[] padres, Individuo[] hijos) {
+    public Individuo[] seleccionPostCruce(Individuo[] padres, Individuo[] hijos, boolean activarSelector) {
         return hijos;
     }
 

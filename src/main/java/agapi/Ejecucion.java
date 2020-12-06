@@ -124,6 +124,14 @@ public class Ejecucion {
             poblacionActual = generaciones[i - 1].getPoblacion();
             selector.prepararSeleccion(poblacionActual);
             generaciones[i] = generaciones[i - 1].generar();
+            if (generaciones[i - 1].getMejorIndividuoGlobal()== null){
+                generaciones[i - 1].setMejorIndividuoGlobal(generaciones[i - 1].getPoblacion().getMejorIndividuo());
+                generaciones[i].setMejorIndividuoGlobal(generaciones[i - 1].getMejorIndividuoGlobal());
+            }else if(generaciones[i].getPoblacion().getMejorIndividuo().getFA() > generaciones[i - 1].getMejorIndividuoGlobal().getFA() ){
+                generaciones[i].setMejorIndividuoGlobal(generaciones[i - 1].getMejorIndividuoGlobal());
+            } else {
+                generaciones[i].setMejorIndividuoGlobal(generaciones[i].getPoblacion().getMejorIndividuo());
+            }
         }
         tiempoEjecucion = System.nanoTime() - tiempoInicial;
         banderaEjecutar = true;

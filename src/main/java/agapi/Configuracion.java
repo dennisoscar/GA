@@ -60,6 +60,7 @@ public class Configuracion {
     private boolean banderaNumeroEjecuciones;
     private boolean banderaNumeroGeneraciones;
     private boolean banderaSelector;
+    private boolean banderaProbabilidadSelectorPostCruce;
     private boolean banderaSelectorPostCruce;
     private boolean banderaProbabilidadCruce;
     private boolean banderaProbabilidadMutacion;
@@ -279,6 +280,23 @@ public class Configuracion {
         }
         banderaProbabilidadCruce = true;
     }
+
+    /**
+     * Establece el valor de la  probabilidad de que se realice el SelectorpostCruce, esto quiere decir
+     * que de acuerdo a una probabilidad hace que los hijos compitan o no con los padres para pasar a la
+     * siguiente generacion
+     *
+     */
+        public void setProbabilidadSelectorPostCruce(double probabilidadSelectorPostCruce) {
+            if (probabilidadSelectorPostCruce >= 0.0 && probabilidadSelectorPostCruce <= 1.0) {
+                Generacion.setProbabilidadCruce(probabilidadSelectorPostCruce);
+            } else {
+                throw new IllegalArgumentException(
+                        "probabilidadCruce debe estar dentro del rango (0,1)");
+            }
+            banderaProbabilidadSelectorPostCruce = true;
+        }
+
 
     /**
      * Establece el valor de la probabilidad de mutación a utilizar. Después que

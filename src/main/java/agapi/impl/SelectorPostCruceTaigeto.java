@@ -44,7 +44,7 @@ public class SelectorPostCruceTaigeto implements SelectorPostCruce {
      * @return los 2 individuos seleccionados para la siguiente generación
      */
     @Override
-    public Individuo[] seleccionPostCruce(Individuo[] padres, Individuo[] hijos) {
+    public Individuo[] seleccionPostCruce(Individuo[] padres, Individuo[] hijos, boolean activarSelector) {
         Individuo[] exitosos = new Individuo[2];
         Individuo[] a = new Individuo[4];
         a[0] = padres[0];
