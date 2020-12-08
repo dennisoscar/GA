@@ -11,7 +11,7 @@ public class IndividuoEnteroMultifibras extends IndividuoCombinatorio {
         double fa = 0;
         double faB = 0;
 //        int[] s = this.getCromosoma();
-        parametrosRetornoRsa = simuladorRSAMultifibras.SimuladorRSAMultifibras(this.getCromosoma(),individuoId);
+        parametrosRetornoRsa = simuladorRSAMultifibras.RunSimuladorRSAMultifibras(this.getCromosoma(),individuoId);
         fa = parametrosRetornoRsa.getMaximoExpectro();
         faB = parametrosRetornoRsa.getCantidadBloqueos();
         if(individuoId!= null && individuoId.equals(0)) {

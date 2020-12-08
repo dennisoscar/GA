@@ -289,7 +289,7 @@ public class Configuracion {
      */
         public void setProbabilidadSelectorPostCruce(double probabilidadSelectorPostCruce) {
             if (probabilidadSelectorPostCruce >= 0.0 && probabilidadSelectorPostCruce <= 1.0) {
-                Generacion.setProbabilidadCruce(probabilidadSelectorPostCruce);
+                Generacion.setProbabilidadSelectorPostCruce(probabilidadSelectorPostCruce);
             } else {
                 throw new IllegalArgumentException(
                         "probabilidadCruce debe estar dentro del rango (0,1)");
