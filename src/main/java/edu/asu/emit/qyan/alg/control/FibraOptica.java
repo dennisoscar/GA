@@ -6,6 +6,25 @@ public class FibraOptica {
     public int id;
     public int tiempo;
     public FrecuenciaSlot[] listafs;
+    public int prioridad;
+    public int costo;
+
+    public int getCosto() {
+        return costo;
+    }
+
+    public void setCosto(int costo) {
+        this.costo = costo;
+    }
+
+    public int getPrioridad() {
+        return prioridad;
+    }
+
+    public void setPrioridad(int prioridad) {
+        this.prioridad = prioridad;
+    }
+
 
     public FibraOptica(int tam) {
         super();

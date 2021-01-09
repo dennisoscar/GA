@@ -47,14 +47,17 @@ public class GrafoMatrizV2 {
                 for (int k = 0; k < grafo[x][y].listafibra.length; k++) {
                     //instanciar el vector de frecuencySlot dentro de la fibra
                     grafo[x][y].listafibra[k] = new FibraOptica(tamanhoSlot);
+                    grafo[x][y].listafibra[k].setPrioridad(0);
                     for (int i = 0; i < grafo[x][y].listafibra[k].listafs.length; i++) {
                         grafo[x][y].listafibra[k].listafs[i] = new FrecuenciaSlot(0, 0, 0);
+
                     }
 
                 }
 
             }
         }
+
     }
 
     public void agregarRuta(int origen, int destino, int distancia, int cantfs) {

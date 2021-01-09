@@ -195,6 +195,9 @@ public class Generador {
                 peor = nuevos[i + 1];
             }
         }
+        //agregar el mejor individio global y el contador de convergencia
+        //si el mejor individuo global fue reemplazado entonces contador = 0
+        //sino contador= contador+1
     }
 
     // devuelve una nueva poblacion producto del proceso generacional
