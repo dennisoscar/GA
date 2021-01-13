@@ -8,6 +8,7 @@ public class FibraOptica {
     public FrecuenciaSlot[] listafs;
     public int prioridad;
     public int costo;
+    public String tipoFs;
 
     public int getCosto() {
         return costo;
@@ -32,6 +33,14 @@ public class FibraOptica {
     }
 
     public FibraOptica() {
+    }
+
+    public String getTipoFs() {
+        return tipoFs;
+    }
+
+    public void setTipoFs(String tipoFs) {
+        this.tipoFs = tipoFs;
     }
 
     public FrecuenciaSlot[] getListafs() {

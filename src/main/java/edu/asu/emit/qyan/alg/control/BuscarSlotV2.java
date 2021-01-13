@@ -1,8 +1,12 @@
 package edu.asu.emit.qyan.alg.control;
 
+
 import edu.asu.emit.qyan.alg.model.Path;
 import edu.asu.emit.qyan.alg.model.abstracts.BaseVertex;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class BuscarSlotV2 {
@@ -61,32 +65,34 @@ public class BuscarSlotV2 {
                 int n2 = g.posicionNodo(l);
                 int[][] auxFS = new int[g.grafo[n1][n2].listafibra[0].listafs.length][g.grafo[n1][n2].listafibra.length];
                 //recorremos cada lista de fibra que pertenece al enlace
-                for (int fibraCount = 0; fibraCount < g.grafo[n1][n2].listafibra.length; fibraCount++) {
+                for (int fibraCount = 0; fibraCount < g.grafo[n1][n2].listafibra.length ; fibraCount++) {
                     //recorremos cafa FS que pertenece a la fibra
                     // la variable existFS indica si existe la cantidad de FS que necesita el Request en la fibra
-                    boolean existFS = true;
-                    int fsCount = 0;
-                    for (int frecuencySlotCount = 0; frecuencySlotCount < g.grafo[n1][n2].listafibra[fibraCount].listafs.length; frecuencySlotCount++) {
-                        if (existFS) {
-                            fsCount = fs;
-                        }
-                        //0 significa que esta libre el FS de la fibra
-                        if (g.grafo[n1][n2].listafibra[fibraCount].listafs[frecuencySlotCount].libreOcupado == 0
-                        ) {
-                            fsCount--;
-                            existFS = false;
-                            if (fsCount == 0) {
-                                // 1 indica que apartir de este indice se puede asignar la cantidad de FS que necesita el request
-                                auxMatrizFSF[frecuencySlotCount - fs + 1][enlaceCount] = 1;
-                                // se vuelve atras al indici siguiente del que se guardo anteriormente. para que en la siguuiente iteracion se continue buscando
-                                frecuencySlotCount = frecuencySlotCount - fs + 1;
+                    if(g.grafo[n1][n2].listafibra[fibraCount].getTipoFs().equals(String.valueOf(fs)) ) {
+                        boolean existFS = true;
+                        int fsCount = 0;
+                        for (int frecuencySlotCount = 0; frecuencySlotCount < g.grafo[n1][n2].listafibra[fibraCount].listafs.length; frecuencySlotCount++) {
+                            if (existFS) {
+                                fsCount = fs;
+                            }
+                            //0 significa que esta libre el FS de la fibra
+                            if (g.grafo[n1][n2].listafibra[fibraCount].listafs[frecuencySlotCount].libreOcupado == 0
+                            ) {
+                                fsCount--;
+                                existFS = false;
+                                if (fsCount == 0) {
+                                    // 1 indica que apartir de este indice se puede asignar la cantidad de FS que necesita el request
+                                    auxMatrizFSF[frecuencySlotCount - fs + 1][enlaceCount] = 1;
+                                    // se vuelve atras al indici siguiente del que se guardo anteriormente. para que en la siguuiente iteracion se continue buscando
+                                    frecuencySlotCount = frecuencySlotCount - fs + 1;
+                                    existFS = true;
+                                }
+
+                            } else {
                                 existFS = true;
                             }
 
-                        } else {
-                            existFS = true;
                         }
-
                     }
                 }
 
@@ -108,6 +114,17 @@ public class BuscarSlotV2 {
                     break;
                 }
             }
+
+
+            /**
+             * creamos una lista clonada de las fibras para ordendar de acuerdo a la prioridad
+             */
+            FibraOptica[] fibrasPriorizadas = g.grafo[0][0].listafibra;
+            List<FibraOptica> fibrasListPriori = new ArrayList<FibraOptica>(Arrays.asList(fibrasPriorizadas));
+            fibrasListPriori.sort(Comparator.comparing(s -> s.getPrioridad()));
+
+            int fibraCount;
+
             //En caso de no poder sellecionar el indice de fs significa que no cumplen las condiciones
             //de contiguidad para ese camino por lo que ya retornamos resultfalso que indica 1 bloqueo
             if(respuestaV2.getIndiceFS()!=-1) {
@@ -128,8 +145,19 @@ public class BuscarSlotV2 {
                     //Se cambia el guardado del indice de fibra en el indice del enlace
                     //ya que en caso de que se 1 sola fibra y halla 2 enlaces en el camino
                     // da un arrayindexof 1 ya que supera la cantidad fibras donde guardar.
-                    for (int fibraCount = 0; fibraCount < g.grafo[n1][n2].listafibra.length; fibraCount++) {
-                        if (g.grafo[n1][n2].listafibra[fibraCount].listafs[respuestaV2.getIndiceFS()].libreOcupado == 0) {
+
+
+                    /**
+                     * recorremos la lista ordenada y el count empieza por la fibra con prioridad 1 y va aumentando
+                     */
+                    for (FibraOptica item : fibrasListPriori) {
+                        fibraCount = item.getId();
+                        /**
+                         * preguntamos tambien si cumple la condicion de si esa fibra puede almacenar una peticion
+                         * con el FS demandado
+                         */
+                        if (g.grafo[n1][n2].listafibra[fibraCount].listafs[respuestaV2.getIndiceFS()].libreOcupado == 0
+                                &&  g.grafo[n1][n2].listafibra[fibraCount].getTipoFs().equals(String.valueOf(fs)) ) {
                             respuestaV2.indiceFibra[enlaceCount] = fibraCount;
                             //se creo esta linea para solucionar un fix que no sabemos si esta bien
 //                        respuestaV2.indiceFibra[fibraCount] = fibraCount;
@@ -145,6 +173,7 @@ public class BuscarSlotV2 {
         }
         return resultFalsoV2;
     }
+
 
     int[][] clearMat(int[][] mat) {
         for (int a = 0; a < mat.length; a++) {

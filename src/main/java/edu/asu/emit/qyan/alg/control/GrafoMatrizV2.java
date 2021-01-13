@@ -37,7 +37,6 @@ public class GrafoMatrizV2 {
         } catch (IOException e) {
             System.out.println("No se pudo leer el tamaño de la fibra del properties");
         }
-//        System.out.println(config.getProperty("cantidadDeCaminos"));
         tamanhoFibra = Integer.parseInt(config.getProperty("tamanhoFibra"));
         for (int x = 0; x < grafo.length; x++) {
             for (int y = 0; y < grafo[x].length; y++) {
@@ -49,7 +48,9 @@ public class GrafoMatrizV2 {
                     grafo[x][y].listafibra[k] = new FibraOptica(tamanhoSlot);
                     grafo[x][y].listafibra[k].setPrioridad(0);
                     for (int i = 0; i < grafo[x][y].listafibra[k].listafs.length; i++) {
+
                         grafo[x][y].listafibra[k].listafs[i] = new FrecuenciaSlot(0, 0, 0);
+                        grafo[x][y].listafibra[k].setId(k);
 
                     }
 

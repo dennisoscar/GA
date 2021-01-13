@@ -9,10 +9,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 public class SimuladorRSAMultifibras {
     private static List<Solicitud> solicitudes;
@@ -62,6 +59,8 @@ public class SimuladorRSAMultifibras {
         Properties config = new Properties();
         InputStream configInput;
         configInput = SimuladorRSA.class.getClassLoader().getResourceAsStream("config.properties");
+
+
         try {
             config.load(configInput);
         } catch (IOException e) {
@@ -69,6 +68,8 @@ public class SimuladorRSAMultifibras {
         }
 //        System.out.println(config.getProperty("cantidadDeCaminos"));
         int tamanhoSlot = Integer.parseInt(config.getProperty("tamanhoSlot"));
+        String tipoFs = config.getProperty("tipoFS");
+        String[] tipoFsArray = tipoFs.split(",");
         solicitudes = new ArrayList<>();
         // Matriz que representa la red igual al archivo test_16 que se va a utilar al tener los caminos.
         g.InicializarGrafo(g.grafo, tamanhoSlot);
@@ -90,8 +91,10 @@ public class SimuladorRSAMultifibras {
         for (int x = 0; x < g.grafo.length; x++) {
             int menor = 0;
             int indiceMenor = 0;
-            int prioridad = 1;
+
             for (int y = 0; y < g.grafo[x].length; y++) {
+                int indiceTipoFS = 0;
+                int prioridad = 1;
                 while (prioridad <= g.grafo[x][y].listafibra.length) {
                     for (int k = g.grafo[x][y].listafibra.length - 1; k >= 0; k--) {
                         if (menor >= g.grafo[x][y].listafibra[k].getCosto()) {
@@ -100,20 +103,47 @@ public class SimuladorRSAMultifibras {
                         }
                     }
 
+
                     g.grafo[x][y].listafibra[indiceMenor].setCosto(99999999);
                     g.grafo[x][y].listafibra[indiceMenor].setPrioridad(prioridad);
-                    prioridad++;
+
                     /*recorremos la matriz de adyacencia para sumar 1 a las fibras adyacentes a la fibra
                     con indice [indiceMenor]*/
                     for (int n = 0; n < g.matrizAdyacencia.length; n++) {
-                        if (g.matrizAdyacencia[indiceMenor][n] == true) {
-                            g.grafo[x][y].listafibra[n].setCosto(g.grafo[x][y].listafibra[n].getCosto() + 1);
+                        if(g.grafo[x][y].listafibra[prioridad-1].getTipoFs() == null) {
+                            g.grafo[x][y].listafibra[prioridad-1].setTipoFs(tipoFsArray[indiceTipoFS]);
                         }
+
+                        if (g.matrizAdyacencia[indiceMenor][n] == true) {
+                                g.grafo[x][y].listafibra[n].setCosto(g.grafo[x][y].listafibra[n].getCosto() + 1);
+
+                            /**
+                             * En esta  parte se le asigna un FS especifico al core con el indece "indiceMenor"
+                             * y a sus adyacentes
+                             *
+                             */
+
+                        }
+                        if (g.matrizAdyacencia[prioridad-1][n] == true && g.grafo[x][y].listafibra[n].getTipoFs() == null) {
+                            if ((prioridad-1) < n && n!= (g.grafo[x][y].listafibra.length -1)) {
+                                if ((indiceTipoFS + 1) == tipoFsArray.length) {
+                                    g.grafo[x][y].listafibra[n].setTipoFs(tipoFsArray[0]);
+                                } else {
+                                    g.grafo[x][y].listafibra[n].setTipoFs(tipoFsArray[indiceTipoFS + 1]);
+                                }
+                            }
+                        }
+                    }
+                    prioridad++;
+                    indiceTipoFS++;
+                    if(indiceTipoFS >= tipoFsArray.length){
+                        indiceTipoFS =0;
                     }
                     menor = 999999999;
                 }
             }
         }
+        int  n = g.grafo[0][0].listafibra.length;
 
 
         System.out.println("Testing top-k shortest paths!");
