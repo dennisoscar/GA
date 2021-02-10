@@ -17,7 +17,7 @@ public class SimuladorRSAMultifibras {
     private static VariableGraph graph;
     private static int time = 0;
     private static final int[] vertices = {1, 2, 3, 4, 5};
-    private static final GrafoMatrizV2 g = new GrafoMatrizV2(vertices);
+    private static GrafoMatrizV2 g = new GrafoMatrizV2(vertices);
 
     private static Solicitud obtenerSolicitud(int cromosomaValor, List<Solicitud> solicitudList) {
         Solicitud solicitud;
@@ -87,64 +87,63 @@ public class SimuladorRSAMultifibras {
         }
 
         //priorizacion de core
+        if(config.getProperty("TODE").equals(Metodo.ACTIVO.name())) {
+            for (int x = 0; x < g.grafo.length; x++) {
+                int menor = 0;
+                int indiceMenor = 0;
 
-        for (int x = 0; x < g.grafo.length; x++) {
-            int menor = 0;
-            int indiceMenor = 0;
-
-            for (int y = 0; y < g.grafo[x].length; y++) {
-                int indiceTipoFS = 0;
-                int prioridad = 1;
-                while (prioridad <= g.grafo[x][y].listafibra.length) {
-                    for (int k = g.grafo[x][y].listafibra.length - 1; k >= 0; k--) {
-                        if (menor >= g.grafo[x][y].listafibra[k].getCosto()) {
-                            indiceMenor = k;
-                            menor = g.grafo[x][y].listafibra[k].getCosto();
+                for (int y = 0; y < g.grafo[x].length; y++) {
+                    int indiceTipoFS = 0;
+                    int prioridad = 1;
+                    while (prioridad <= g.grafo[x][y].listafibra.length) {
+                        for (int k = g.grafo[x][y].listafibra.length - 1; k >= 0; k--) {
+                            if (menor >= g.grafo[x][y].listafibra[k].getCosto()) {
+                                indiceMenor = k;
+                                menor = g.grafo[x][y].listafibra[k].getCosto();
+                            }
                         }
-                    }
 
 
-                    g.grafo[x][y].listafibra[indiceMenor].setCosto(99999999);
-                    g.grafo[x][y].listafibra[indiceMenor].setPrioridad(prioridad);
+                        g.grafo[x][y].listafibra[indiceMenor].setCosto(99999999);
+                        g.grafo[x][y].listafibra[indiceMenor].setPrioridad(prioridad);
 
                     /*recorremos la matriz de adyacencia para sumar 1 a las fibras adyacentes a la fibra
                     con indice [indiceMenor]*/
-                    for (int n = 0; n < g.matrizAdyacencia.length; n++) {
-                        if(g.grafo[x][y].listafibra[prioridad-1].getTipoFs() == null) {
-                            g.grafo[x][y].listafibra[prioridad-1].setTipoFs(tipoFsArray[indiceTipoFS]);
-                        }
+                        for (int n = 0; n < g.matrizAdyacencia.length; n++) {
+                            if (g.grafo[x][y].listafibra[prioridad - 1].getTipoFs() == null) {
+                                g.grafo[x][y].listafibra[prioridad - 1].setTipoFs(tipoFsArray[indiceTipoFS]);
+                            }
 
-                        if (g.matrizAdyacencia[indiceMenor][n] == true) {
+                            if (g.matrizAdyacencia[indiceMenor][n]) {
                                 g.grafo[x][y].listafibra[n].setCosto(g.grafo[x][y].listafibra[n].getCosto() + 1);
 
-                            /**
-                             * En esta  parte se le asigna un FS especifico al core con el indece "indiceMenor"
-                             * y a sus adyacentes
-                             *
-                             */
+                                /*
+                                 * En esta  parte se le asigna un FS especifico al core con el indece "indiceMenor"
+                                 * y a sus adyacentes
+                                 *
+                                 */
 
-                        }
-                        if (g.matrizAdyacencia[prioridad-1][n] == true && g.grafo[x][y].listafibra[n].getTipoFs() == null) {
-                            if ((prioridad-1) < n && n!= (g.grafo[x][y].listafibra.length -1)) {
-                                if ((indiceTipoFS + 1) == tipoFsArray.length) {
-                                    g.grafo[x][y].listafibra[n].setTipoFs(tipoFsArray[0]);
-                                } else {
-                                    g.grafo[x][y].listafibra[n].setTipoFs(tipoFsArray[indiceTipoFS + 1]);
+                            }
+                            if (g.matrizAdyacencia[prioridad - 1][n] && g.grafo[x][y].listafibra[n].getTipoFs() == null) {
+                                if ((prioridad - 1) < n && n != (g.grafo[x][y].listafibra.length - 1)) {
+                                    if ((indiceTipoFS + 1) == tipoFsArray.length) {
+                                        g.grafo[x][y].listafibra[n].setTipoFs(tipoFsArray[0]);
+                                    } else {
+                                        g.grafo[x][y].listafibra[n].setTipoFs(tipoFsArray[indiceTipoFS + 1]);
+                                    }
                                 }
                             }
                         }
+                        prioridad++;
+                        indiceTipoFS++;
+                        if (indiceTipoFS >= tipoFsArray.length) {
+                            indiceTipoFS = 0;
+                        }
+                        menor = 999999999;
                     }
-                    prioridad++;
-                    indiceTipoFS++;
-                    if(indiceTipoFS >= tipoFsArray.length){
-                        indiceTipoFS =0;
-                    }
-                    menor = 999999999;
                 }
             }
         }
-        int  n = g.grafo[0][0].listafibra.length;
-
 
         System.out.println("Testing top-k shortest paths!");
         graph = new VariableGraph("data/test_16");
@@ -215,6 +214,7 @@ public class SimuladorRSAMultifibras {
         } catch (IOException e) {
             System.out.println("No se pudo leer la cantidad de caminos del properties");
         }
+        Double alfa = Double.valueOf(config.getProperty("alfa"));
         cantidadDeCaminos = Integer.parseInt(config.getProperty("cantidadDeCaminos"));
         /*
           ordenamos las solicitudes de mayor a menor con respecto al FS de cada solicitud
@@ -227,12 +227,12 @@ public class SimuladorRSAMultifibras {
                 cromosoma[k] = k + 1;
                 cromosomaOrdenado[k] = solicitudes.get(k).getId() + 1;
             }
-            /**
-             *
-             * devolvemos el cromosoma ordenado de acuerdo fs (de mayor a menor) de las  solicitudes  en el
-             * archivo y cada elemento hace referencia a la fila donde se encuentran las solicitudes en el
-             * archivo de conexion
-             *
+            /*
+
+              devolvemos el cromosoma ordenado de acuerdo fs (de mayor a menor) de las  solicitudes  en el
+              archivo y cada elemento hace referencia a la fila donde se encuentran las solicitudes en el
+              archivo de conexion
+
              */
             parametrosRetornoRsa.setCromosomaOrdenado(cromosomaOrdenado);
         }
@@ -250,10 +250,11 @@ public class SimuladorRSAMultifibras {
             BuscarSlotV2 r = new BuscarSlotV2(g, shortest_paths_list);
             //busca un camino posible para una demanda teniendo en cuenta la 3 reglas de eon
             ResultadoSlotV2 res = r.concatenarCaminos(fs);
+
             if (res != null) {
                 System.out.println(res.toString());
                 AsignacionV2 asignar = new AsignacionV2(g, res);
-                asignar.marcarSlotUtilizados(time);
+                asignar.marcarSlotUtilizados(time,alfa);
             } else {
                 cont++;
                 System.out.println("No se encontró camino posible.");

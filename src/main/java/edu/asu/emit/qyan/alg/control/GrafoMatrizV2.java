@@ -4,6 +4,7 @@ import py.una.pol.model.SimuladorRSA;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Properties;
 
 public class GrafoMatrizV2 {
@@ -18,10 +19,8 @@ public class GrafoMatrizV2 {
     }
 
     public GrafoMatrizV2(int[] serieNodos) {
-        cadenaVertices = new int[serieNodos.length];
-        for (int i = 0; i < serieNodos.length; i++) {
-            cadenaVertices[i] = serieNodos[i];
-        }
+//        cadenaVertices = new int[serieNodos.length];
+        cadenaVertices = Arrays.copyOf(serieNodos, serieNodos.length);
         nodos = serieNodos.length;
         //	System.out.println(nodos.length);
         grafo = new EnlaceV2[serieNodos.length][serieNodos.length];
@@ -30,7 +29,7 @@ public class GrafoMatrizV2 {
     public void InicializarGrafo(EnlaceV2[][] grafo, int tamanhoSlot) {
         int tamanhoFibra;
         Properties config = new Properties();
-        InputStream configInput = null;
+        InputStream configInput;
         configInput = SimuladorRSA.class.getClassLoader().getResourceAsStream("config.properties");
         try {
             config.load(configInput);
@@ -46,7 +45,12 @@ public class GrafoMatrizV2 {
                 for (int k = 0; k < grafo[x][y].listafibra.length; k++) {
                     //instanciar el vector de frecuencySlot dentro de la fibra
                     grafo[x][y].listafibra[k] = new FibraOptica(tamanhoSlot);
+                    grafo[x][y].listafibra[k].setMlMark(null);
+                    grafo[x][y].listafibra[k].setMcMark(null);
                     grafo[x][y].listafibra[k].setPrioridad(0);
+                    grafo[x][y].listafibra[k].setMl(0);
+                    grafo[x][y].listafibra[k].setMc(0);
+                    grafo[x][y].listafibra[k].setMw(0.0d);
                     for (int i = 0; i < grafo[x][y].listafibra[k].listafs.length; i++) {
 
                         grafo[x][y].listafibra[k].listafs[i] = new FrecuenciaSlot(0, 0, 0);

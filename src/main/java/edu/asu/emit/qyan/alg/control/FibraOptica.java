@@ -9,6 +9,11 @@ public class FibraOptica {
     public int prioridad;
     public int costo;
     public String tipoFs;
+    public int ml;
+    public int mc;
+    public double mw;
+    public Boolean mlMark;
+    public Boolean mcMark;
 
     public int getCosto() {
         return costo;
@@ -16,6 +21,54 @@ public class FibraOptica {
 
     public void setCosto(int costo) {
         this.costo = costo;
+    }
+
+    public void setMl(int ml) {
+        this.ml= ml;
+    }
+
+    public int getMl() {
+        return ml;
+    }
+
+    public int getMc() {
+        return mc;
+    }
+
+    public double getMw() {
+        return mw;
+    }
+
+    public void setMc(int mc) {
+        this.mc= mc;
+    }
+
+    public void setMw(double mw) {
+        this.mw = mw;
+    }
+
+    public boolean isMlMark() {
+        return mlMark;
+    }
+
+    public void setMlMark(Boolean mlMark) {
+        if(this.mlMark == null ) {
+            this.mlMark = false;
+        } else {
+            this.mlMark = mlMark;
+        }
+    }
+
+    public boolean isMcMark() {
+        return mcMark;
+    }
+
+    public void setMcMark(Boolean mcMark) {
+        if(this.mcMark == null ) {
+            this.mcMark = false;
+        } else {
+            this.mcMark = mcMark;
+        }
     }
 
     public int getPrioridad() {

@@ -18,6 +18,12 @@ public class DesasignarV2 {
 
                     for (int j = 0; j < g.grafo[i][k].listafibra[x].listafs.length; j++) {
                         g.grafo[i][k].listafibra[x].listafs[j].libreOcupado = 0;
+                        g.grafo[i][k].listafibra[x].setMlMark(false);
+                        g.grafo[i][k].listafibra[x].setMcMark(false);
+                        g.grafo[i][k].listafibra[x].setPrioridad(0);
+                        g.grafo[i][k].listafibra[x].setMl(0);
+                        g.grafo[i][k].listafibra[x].setMc(0);
+                        g.grafo[i][k].listafibra[x].setMw(0.0d);
                     }
 
                 }
