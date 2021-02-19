@@ -70,20 +70,23 @@ public class AsignacionV2 {
                     g.grafo[n1][n2].listafibra[resultado.indiceFibra[i]].setMlMark(true);
                     g.grafo[n2][n1].listafibra[resultado.indiceFibra[i]].setMlMark(true);
                 }
-                int mcAux1 =0;
-                for (int fibraAdyacente = 0; fibraAdyacente < g.matrizAdyacencia[resultado.indiceFibra[i]].length
-                        && g.isMatrizAdyacencia; fibraAdyacente++) {
-                    if(g.matrizAdyacencia[fibraAdyacente][resultado.indiceFibra[i]]){
-                        if (g.grafo[n1][n2].listafibra[fibraAdyacente].listafs[indiceFS].libreOcupado == 0
-                                && (config.getProperty("MC").equals(Metodo.ACTIVO.name())
-                                || config.getProperty("MW").equals(Metodo.ACTIVO.name()))) {
-                            g.grafo[n1][n2].listafibra[fibraAdyacente].setMl(g.grafo[n1][n2].listafibra[fibraAdyacente].getMl()+1);
-                            g.grafo[n2][n1].listafibra[fibraAdyacente].setMl(g.grafo[n2][n1].listafibra[fibraAdyacente].getMl()+1);
-                        }
-                        g.grafo[n1][n2].listafibra[fibraAdyacente].listafs[indiceFS].libreOcupado=999;
-                        g.grafo[n2][n1].listafibra[fibraAdyacente].listafs[indiceFS].libreOcupado=999;
-                    }
-                }
+//                int mcAux1 =0;
+//                for (int fibraAdyacente = 0; fibraAdyacente < g.matrizAdyacencia[resultado.indiceFibra[i]].length
+//                        && g.isMatrizAdyacencia; fibraAdyacente++) {
+//                    if(g.matrizAdyacencia[fibraAdyacente][resultado.indiceFibra[i]]){
+//                        if (g.grafo[n1][n2].listafibra[fibraAdyacente].listafs[indiceFS].libreOcupado == 0
+//                                && (config.getProperty("MC").equals(Metodo.ACTIVO.name())
+//                                || config.getProperty("MW").equals(Metodo.ACTIVO.name()))) {
+//                            g.grafo[n1][n2].listafibra[fibraAdyacente].setMl(g.grafo[n1][n2].listafibra[fibraAdyacente].getMl()+1);
+//                            g.grafo[n2][n1].listafibra[fibraAdyacente].setMl(g.grafo[n2][n1].listafibra[fibraAdyacente].getMl()+1);
+//                        }
+//                      if(!(config.getProperty("MC").equals(Metodo.ACTIVO.name())
+//                              || config.getProperty("MW").equals(Metodo.ACTIVO.name()))) {
+//                          g.grafo[n1][n2].listafibra[fibraAdyacente].listafs[indiceFS].libreOcupado = 999;
+//                          g.grafo[n2][n1].listafibra[fibraAdyacente].listafs[indiceFS].libreOcupado = 999;
+//                      }
+//                  }
+//              }
             }
 
             for (int j = 0; j < g.grafo[p][m].listafibra.length; j++) {

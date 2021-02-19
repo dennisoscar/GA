@@ -109,7 +109,8 @@ public class SimuladorRSAMultifibras {
 
                     /*recorremos la matriz de adyacencia para sumar 1 a las fibras adyacentes a la fibra
                     con indice [indiceMenor]*/
-                        for (int n = 0; n < g.matrizAdyacencia.length; n++) {
+                        for (int n = 0; n < g.matrizAdyacencia.length
+                                && prioridad < Integer.parseInt(config.getProperty("tamanhoFibra")) ; n++) {
                             if (g.grafo[x][y].listafibra[prioridad - 1].getTipoFs() == null) {
                                 g.grafo[x][y].listafibra[prioridad - 1].setTipoFs(tipoFsArray[indiceTipoFS]);
                             }
@@ -124,6 +125,10 @@ public class SimuladorRSAMultifibras {
                                  */
 
                             }
+                            /*
+                            recorremos la adyacencia y solo se le setea el tipo de FS al core que tenemos adelante del
+                            core de referencia, al que tenemos detràs no se le setea aun nada
+                             */
                             if (g.matrizAdyacencia[prioridad - 1][n] && g.grafo[x][y].listafibra[n].getTipoFs() == null) {
                                 if ((prioridad - 1) < n && n != (g.grafo[x][y].listafibra.length - 1)) {
                                     if ((indiceTipoFS + 1) == tipoFsArray.length) {

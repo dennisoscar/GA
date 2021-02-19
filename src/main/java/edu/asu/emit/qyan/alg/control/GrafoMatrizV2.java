@@ -13,6 +13,7 @@ public class GrafoMatrizV2 {
     int nodos;
     int[] cadenaVertices;
     public boolean isMatrizAdyacencia;
+    public boolean todeMark;
 
     GrafoMatrizV2() {
 
@@ -85,5 +86,13 @@ public class GrafoMatrizV2 {
             if (cadenaVertices[i] == nodo) return i;
         }
         return -1;
+    }
+
+    public boolean isTodeMark() {
+        return todeMark;
+    }
+
+    public void setTodeMark(boolean todeMark) {
+        this.todeMark = todeMark;
     }
 }

@@ -75,7 +75,8 @@ public class BuscarSlotV2 {
                     if( config.getProperty("FF").equals(Metodo.ACTIVO.name())
                             || config.getProperty("MC").equals(Metodo.ACTIVO.name())
                             || config.getProperty("MW").equals(Metodo.ACTIVO.name())
-                            ||g.grafo[n1][n2].listafibra[fibraCount].getTipoFs().equals(String.valueOf(fs))) {
+                            || g.grafo[n1][n2].listafibra[fibraCount].getTipoFs() == null
+                            || g.grafo[n1][n2].listafibra[fibraCount].getTipoFs().equals(String.valueOf(fs))) {
                         boolean existFS = true;
                         int fsCount = 0;
                         for (int frecuencySlotCount = 0; frecuencySlotCount < g.grafo[n1][n2].listafibra[fibraCount].listafs.length; frecuencySlotCount++) {
@@ -104,7 +105,7 @@ public class BuscarSlotV2 {
             respuestaV2.auxFSResultado = clearArray(respuestaV2.auxFSResultado, 1);
             for (int FS_AuxMatrizFSF = 0; FS_AuxMatrizFSF < g.grafo[0][0].listafibra[0].listafs.length; FS_AuxMatrizFSF++) {
                 for (int Col_AuxMatrizFSF = 0; Col_AuxMatrizFSF < camino.get_vertex_list().size() - 1; Col_AuxMatrizFSF++) {
-                    if (auxMatrizFSF[FS_AuxMatrizFSF][Col_AuxMatrizFSF] == 0) {
+                    if (auxMatrizFSF[FS_AuxMatrizFSF][Col_AuxMatrizFSF] == 0 ) {
                         respuestaV2.auxFSResultado[FS_AuxMatrizFSF] = 0;
                         break;
                     }
@@ -145,6 +146,7 @@ public class BuscarSlotV2 {
                         FibraOptica[] fibrasPriorizadas = g.grafo[n1][n2].listafibra;
                         fibrasListPriori = new ArrayList<>(Arrays.asList(fibrasPriorizadas));
                         fibrasListPriori.sort(Comparator.comparing(FibraOptica::getPrioridad));
+                        g.setTodeMark(false);
                     }else if(config.getProperty("MW").equals(Metodo.ACTIVO.name())) {
                         FibraOptica[] fibrasPriorizadas = g.grafo[n1][n2].listafibra;
                         fibrasListPriori = new ArrayList<>(Arrays.asList(fibrasPriorizadas));
@@ -178,7 +180,9 @@ public class BuscarSlotV2 {
                                 && ( config.getProperty("MC").equals(Metodo.ACTIVO.name())
                                 || config.getProperty("MW").equals(Metodo.ACTIVO.name())
                                 || config.getProperty("FF").equals(Metodo.ACTIVO.name())
-                                || g.grafo[n1][n2].listafibra[fibraCount].getTipoFs().equals(String.valueOf(fs))) ) {
+                                || g.grafo[n1][n2].listafibra[fibraCount].getTipoFs()==null
+                                || g.grafo[n1][n2].listafibra[fibraCount].getTipoFs().equals(String.valueOf(fs)
+                                )) ) {
                             respuestaV2.indiceFibra[enlaceCount] = fibraCount ;
                             //se creo esta linea para solucionar un fix que no sabemos si esta bien
 //                        respuestaV2.indiceFibra[fibraCount] = fibraCount;
