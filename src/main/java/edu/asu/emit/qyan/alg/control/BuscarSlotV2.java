@@ -208,7 +208,7 @@ public class BuscarSlotV2 {
                                     for (int indice_mat_ady = 0; indice_mat_ady < Integer.parseInt(config.getProperty("tamanhoFibra"))
                                             && band == true; indice_mat_ady++) {
                                         if (g.matrizAdyacencia[indice_mat_ady][core_result] == true
-                                                && g.grafo[n1][n2].listafibra[indice_mat_ady].listafs[fs_result].libreOcupado != 0)
+                                                && g.grafo[n1][n2].listafibra[core_result].listafs[fs_result].libreOcupado != 0)
                                             xt_min_fs += g.xt;
 
                                         if (xt_min_fs > xt_th) {
@@ -268,7 +268,7 @@ public class BuscarSlotV2 {
                                     for (int indice_mat_ady = 0; indice_mat_ady < Integer.parseInt(config.getProperty("tamanhoFibra"))
                                             && band == true; indice_mat_ady++) {
                                         if (g.matrizAdyacencia[indice_mat_ady][core_resultt] == true
-                                                && g.grafo[nn1][nn2].listafibra[indice_mat_ady].listafs[respuestaV2.indiceFS].libreOcupado != 0)
+                                                && g.grafo[nn1][nn2].listafibra[core_resultt].listafs[respuestaV2.indiceFS].libreOcupado != 0)
                                             xt_min_fss += g.xt;
 
                                         if (xt_min_fss > xt_th) {
