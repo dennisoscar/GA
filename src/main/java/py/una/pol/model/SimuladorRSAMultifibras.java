@@ -71,6 +71,16 @@ public class SimuladorRSAMultifibras {
         String tipoFs = config.getProperty("tipoFS");
         String[] tipoFsArray = tipoFs.split(",");
         solicitudes = new ArrayList<>();
+        double coc = Double.parseDouble(config.getProperty("coc"));
+        double le = Double.parseDouble(config.getProperty("le"));
+        double beta = Double.parseDouble(config.getProperty("beta"));
+        double lambda = Double.parseDouble(config.getProperty("lambda"));
+        double br = Double.parseDouble(config.getProperty("br"));
+        double h =2 * ( (coc*coc*br) / (beta * lambda) );
+        double param =(-2 * h * le);
+        double numerador= 1-Math.exp(param);
+        double denominador = 1 + Math.exp(param);
+        g.setXt(numerador / denominador);
         // Matriz que representa la red igual al archivo test_16 que se va a utilar al tener los caminos.
         g.InicializarGrafo(g.grafo, tamanhoSlot);
         g.agregarRuta(2, 4, 1, tamanhoSlot);

@@ -14,6 +14,7 @@ public class GrafoMatrizV2 {
     int[] cadenaVertices;
     public boolean isMatrizAdyacencia;
     public boolean todeMark;
+    double xt;
 
     GrafoMatrizV2() {
 
@@ -94,5 +95,13 @@ public class GrafoMatrizV2 {
 
     public void setTodeMark(boolean todeMark) {
         this.todeMark = todeMark;
+    }
+
+    public double getXt() {
+        return xt;
+    }
+
+    public void setXt(double xt) {
+        this.xt = xt;
     }
 }
